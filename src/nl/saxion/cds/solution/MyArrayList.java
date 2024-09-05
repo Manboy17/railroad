@@ -186,6 +186,10 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
     @Override
     public boolean isSorted(Comparator<V> comparator) {
         // TODO: implement isSorted()
+        if(size <= 1) {
+            return true;
+        }
+
         return true;
     }
 
