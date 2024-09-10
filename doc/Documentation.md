@@ -4,19 +4,54 @@
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
 ### My binary search algorithm
-Classificatie: O(Log(N))
+Big-O complexity: O(Log(N))
 
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
+
+#### Explanation
+I begin with a collection of sorted items, set 2 pointers: one at the beginning of the collection ans the other at the end. Then i divide the collection into 2 halves by finding the middle point. based on the comparison result i made with the target element, i move left pointer to just after the middle if the middle element is less than the target. Move the right pointer to just before the middle if the middle element is greater that the target. if the middle element is equal to the target, i return its pointion afterwards. Finally, if loop exits without finding the target, -1 will be returned. 
+
+Based on how the algorithm works, this time complexity is due to the nature of how the algorithm work itself. It reduces the problem size by half with each iteration of the loop. Since the loop runs O(log n) times and each iteration is O(n), the overall time complexity is O(log n).
+
+#### Tests
+One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks for proper implemented algorithm:
+
+- Correctness for specific elements: It verifies that the binary search correctly finds the specific element (first, last, second-to-last). For each element, it compares the value found at the retured index with the original element.
+- Handling missing elements: It tests for the element that is not present in the list.
 
 ### My linear search algorithm
-Classificatie: O(N)
+Big-O complexity: O(N)
 
-Implementation:
+Implementation: [my_implementation](../src//nl/saxion/cds/solution/MyArrayList.java)
+
+#### Explanation
+A linear search algorithm traverses the entire array from start to end using a loop. If the element at the current index is equal to the target element, then it returns the index; otherwise, it goes to the next element of the array. If the target element is not found in the array, it returns -1.
+
+Linear search has a time complexity of O(N) because, in the worst scenario, it need to go all over the list to find the needed element or determine that the value is not present. Worth noticing that the time required grows reapidly with the size of the list. 
+
+#### Tests
+One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks for proper implemented algorithm:
+
+- Correctness for specific elements: It verifies that the binary search correctly finds the specific element (first, last, second-to-last). For each element, it compares the value found at the retured index with the original element.
+- Handling missing elements: It tests for the element that is not present in the list.
+
 
 ### My QuickSort algorithm
-Classificatie:
+Big-O complexity: O(n log n)
 
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
+
+#### Explanation
+The algorithm selects a "pivot" element from a list as a first element. The array is rearranged so that all elements less than pivot are moved to its left and all greater elements that the pivot are moved to its right. Then i have a seperate method that uses 2 pointers that traverse the list from both ends towards the center. Elements are swapped based on their comparison with the pivot until the pointers cross each other. Once we have found the correct pivot position, quick sort is then recursively called to the sub-arrays from left-to-right and right-to-left. 
+
+With regards to the time complexity, we divide the list into 2 roughly equal halves that requires a linear time O(n).  If the pivot divides the aaray each time, the number of levels in the recursion tree will be about Log n. Consequently, each level of the recursion requires O(n) time to partition nd there are O(log n) levels on average, the total time complexity will be O(n log n).
+
+#### Tests
+One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks for proper implemented algorithm:
+
+The test ensures that after applying quick sort, the list is correctly sorted. 
+
+Another test moethod named [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/collection/TestMyArrayList.java): this test ensures not only that the sorting is done correctly, it also provides a validation by checking the list if it is sorted. 
 
 ## My BST
 Implementation:
