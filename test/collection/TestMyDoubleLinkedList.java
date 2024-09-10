@@ -25,6 +25,60 @@ public class TestMyDoubleLinkedList {
     }
 
     @Test
+    void GivenSingleElementList_WhenRemovingFirst_ConfirmListIsEmpty() throws EmptyCollectionException {
+        list = new DoubleLinkedList<>();
+        list.addLast("onlyElement");
+        assertEquals(1, list.size());
+
+        String removed = list.removeFirst();
+        assertEquals("onlyElement", removed);
+        assertTrue(list.isEmpty());
+        assertEquals(0, list.size());
+        assertEquals("[]", list.toString());
+    }
+
+    @Test
+    void GivenSingleElementList_WhenRemovingLast_ConfirmListIsEmpty() throws EmptyCollectionException {
+        list = new DoubleLinkedList<>();
+        list.addLast("onlyElement");
+        assertEquals(1, list.size());
+
+        String removed = list.removeLast();
+        assertEquals("onlyElement", removed);
+        assertTrue(list.isEmpty());
+        assertEquals(0, list.size());
+        assertEquals("[]", list.toString());
+    }
+
+    @Test
+    void GivenListWithMultipleElements_WhenRemovingHead_ConfirmChangesAreCorrect() throws ValueNotFoundException, EmptyCollectionException {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.addLast("A");
+        list.addLast("B");
+        list.addLast("C");
+
+        list.remove("A");
+
+        assertEquals("[B, C]", list.toString());
+        assertEquals(2, list.size());
+        assertEquals("B", list.get(0));
+    }
+
+    @Test
+    void GivenListWithMultipleElements_WhenRemovingTail_ConfirmChangesAreCorrect() throws ValueNotFoundException, EmptyCollectionException {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.addLast("A");
+        list.addLast("B");
+        list.addLast("C");
+
+        list.remove("C");
+
+        assertEquals("[A, B]", list.toString());
+        assertEquals(2, list.size());
+        assertEquals("B", list.get(1));
+    }
+
+    @Test
     void GivenEmptyList_WhenCallingGetters_ConfirmListIsActuallyEmpty() {
         DoubleLinkedList<Object> doubleLinkedList = new DoubleLinkedList<>();
         assertTrue(doubleLinkedList.isEmpty());

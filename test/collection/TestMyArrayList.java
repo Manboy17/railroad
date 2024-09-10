@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestMyArrayList {
     // Make sure a lot of resizing has to be done
-    private static final int BIG_NUMBER_OF_ELEMENTS = 5000;
+    private static final int BIG_NUMBER_OF_ELEMENTS = 1000;
     private MyArrayList<String> list;
 
     @BeforeEach

@@ -275,13 +275,34 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
     private int splitInPlace(Comparator<V> comparator, int begin, int end) {
         V pivot = get(begin); // first element (at begin) as pivot
 
-        int left = begin;
+        int left = begin + 1;
         int right = end;
-        int index = right;
 
         // TODO: complete splitInPlace()
+        while (left <= right) {
+            while (left <= right && comparator.compare(get(left), pivot) <= 0) {
+                left++;
+            }
+            while (left <= right && comparator.compare(get(right), pivot) > 0) {
+                right--;
+            }
+            if (left < right) {
+                swapTemp(left, right);
+                left++;
+                right--;
+            }
+        }
+
+        // Swap the pivot with the element at right pointer
+        swapTemp(begin, right);
 
         return right; // Returns index of pivot
+    }
+
+    private void swapTemp(int i, int j) {
+        V temp = get(i);
+        set(i, get(j));
+        set(j, temp);
     }
 
     @Override
@@ -296,25 +317,26 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
 
     @Override
     public int binarySearch(Comparator<V> comparator, V element) {
-        // TODO: implement binarySearch()
-        int left = 0, right = size -1;
+        int left = 0;
+        int right = size - 1;
+        int middle;
 
-        while(left <= right) {
-            int middle = (left + right) / 2;
-            V middleEl = (V) elements[middle];
+        while (left <= right) {
+            middle = (left + right) / 2;
+            V middleElement = get(middle);
 
-            int comparison = comparator.compare(middleEl, element);
+            int comparison = comparator.compare(middleElement, element);
 
-            if(comparison < 0) {
+            if (comparison < 0) {
                 left = middle + 1;
-            } else if(comparison > 0) {
+            } else if (comparison > 0) {
                 right = middle - 1;
             } else {
                 return middle;
             }
         }
 
-        return SaxSearchable.NOT_FOUND;
+        return SaxSearchable.NOT_FOUND; // Element not found
     }
 
     @Override
