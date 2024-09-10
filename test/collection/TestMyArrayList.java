@@ -7,6 +7,7 @@ import nl.saxion.cds.solution.MyArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -154,7 +155,7 @@ public class TestMyArrayList {
     }
 
     @Test
-    void GivenListWithIntegers_WhenQuicksorted_ThenListIsSorted() {
+    void GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted() {
         MyArrayList<Integer> list3 = createIntegerArrayList();
         list3.quickSort(Integer::compareTo);
         System.out.println(list3);
@@ -246,5 +247,12 @@ public class TestMyArrayList {
         i = list3.linearSearch(v);
         assertEquals(v, list3.get(i));
         assertEquals(SaxSearchable.NOT_FOUND, list3.linearSearch(-1));
+    }
+
+    @Test
+    void GivenStringList_WhenSimpleSorted_ThenListIsSorted() {
+        list.simpleSort(String::compareTo);
+        assertTrue(list.isSorted(String::compareTo));
+        assertEquals("[ 2 23 7a a dd ]", list.toString());
     }
 }

@@ -185,9 +185,20 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
 
     @Override
     public boolean isSorted(Comparator<V> comparator) {
-        // TODO: implement isSorted()
-        if(size <= 1) {
+        if (size <= 1) {
             return true;
+        }
+
+        for (int i = 0; i < size - 1; i++) {
+            V current = get(i);
+            V next = get(i + 1);
+
+            if (current == null && next != null) {
+                return false;
+            } else if (current != null && next == null) continue;
+              else if (current != null && comparator.compare(current, next) > 0) {
+                return false;
+            }
         }
 
         return true;
@@ -286,6 +297,23 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
     @Override
     public int binarySearch(Comparator<V> comparator, V element) {
         // TODO: implement binarySearch()
+        int left = 0, right = size -1;
+
+        while(left <= right) {
+            int middle = (left + right) / 2;
+            V middleEl = (V) elements[middle];
+
+            int comparison = comparator.compare(middleEl, element);
+
+            if(comparison < 0) {
+                left = middle + 1;
+            } else if(comparison > 0) {
+                right = middle - 1;
+            } else {
+                return middle;
+            }
+        }
+
         return SaxSearchable.NOT_FOUND;
     }
 

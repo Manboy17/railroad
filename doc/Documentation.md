@@ -1,7 +1,7 @@
 # Algoritmen en klassen
 
 ## MijnArrayList
-Implementation: [mijn implementatie](../src/nl/saxion/cds/collection/MyArrayList.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
 ### My binary search algorithm
 Classificatie: O(Log(N))
