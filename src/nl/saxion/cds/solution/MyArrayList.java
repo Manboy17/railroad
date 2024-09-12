@@ -195,8 +195,7 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
 
             if (current == null && next != null) {
                 return false;
-            } else if (current != null && next == null) continue;
-              else if (current != null && comparator.compare(current, next) > 0) {
+            } else if (current != null && comparator.compare(current, next) > 0) {
                 return false;
             }
         }
@@ -278,7 +277,6 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
         int left = begin + 1;
         int right = end;
 
-        // TODO: complete splitInPlace()
         while (left <= right) {
             while (left <= right && comparator.compare(get(left), pivot) <= 0) {
                 left++;
@@ -287,22 +285,16 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
                 right--;
             }
             if (left < right) {
-                swapTemp(left, right);
+                swap(left, right);
                 left++;
                 right--;
             }
         }
 
         // Swap the pivot with the element at right pointer
-        swapTemp(begin, right);
+        swap(begin, right);
 
         return right; // Returns index of pivot
-    }
-
-    private void swapTemp(int i, int j) {
-        V temp = get(i);
-        set(i, get(j));
-        set(j, temp);
     }
 
     @Override

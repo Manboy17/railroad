@@ -2,12 +2,14 @@ package nl.saxion.cds.solution;
 
 import nl.saxion.cds.collection.EmptyCollectionException;
 import nl.saxion.cds.collection.SaxList;
+import nl.saxion.cds.collection.SaxSearchable;
 import nl.saxion.cds.collection.ValueNotFoundException;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DoubleLinkedList<V> implements SaxList<V> {
+public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
     private Node<V> head;
     private Node<V> tail;
     private int size;
@@ -244,5 +246,27 @@ public class DoubleLinkedList<V> implements SaxList<V> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+    }
+
+    @Override
+    public int linearSearch(V element) {
+        Node<V> current = head;
+        int pos = 0;
+
+        while(current.next != null) {
+            if(current.value.equals(element)) {
+                return pos;
+            }
+
+            current = current.next;
+            pos++;
+        }
+
+        return pos;
+    }
+
+    @Override
+    public int binarySearch(Comparator<V> comparator, V element) {
+        throw new RuntimeException("Not implemented yet!");
     }
 }

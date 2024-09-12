@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestMyDoubleLinkedList {
     private DoubleLinkedList<String> list;
+    private static final int BIG_NUMBER_OF_ELEMENTS = 1000;
 
     @BeforeEach
     void createExampleList() {
@@ -211,5 +212,28 @@ public class TestMyDoubleLinkedList {
 
         list.set(list.size() - 1, "end");
         assertEquals("[start, 2, 3, 4, end]", list.toString());
+    }
+
+    @Test
+    void GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        for (int i = 0; i < BIG_NUMBER_OF_ELEMENTS; i++) {
+            list.addLast(i);
+        }
+
+        assertEquals(BIG_NUMBER_OF_ELEMENTS, list.size());
+
+        // Test for searching an element using linear search
+        int v = list.get(0);
+        int i = list.linearSearch(v);
+        assertEquals(v, list.get(i));
+        v = list.get(BIG_NUMBER_OF_ELEMENTS - 1);
+        i = list.linearSearch(v);
+        assertEquals(v, list.get(i));
+
+        // Test for searching an element using binary search
+        v = list.get(0);
+        int finalV = v;
+        assertThrows(RuntimeException.class, () -> list.binarySearch(Integer::compareTo, finalV));
     }
 }
