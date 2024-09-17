@@ -1,5 +1,4 @@
 package nl.saxion.cds.collection;
-
 import java.util.Comparator;
 
 public interface SaxSortable<V> {

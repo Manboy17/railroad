@@ -36,8 +36,8 @@ public class Track {
         return distance;
     }
 
-    public static SaxList<Track> readTracksFromCSVFile(String filename) {
-        SaxList<Track> tracks = new MyArrayList<>();
+    public static MyArrayList<Track> readTracksFromCSVFile(String filename) {
+        MyArrayList<Track> tracks = new MyArrayList<>();
         try {
             Scanner sc = new Scanner(new File(filename));
             sc.nextLine();

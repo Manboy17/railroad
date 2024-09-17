@@ -48,8 +48,8 @@ public class Station {
         return longitude;
     }
 
-    public static SaxList<Station> readStationsFromCSVFile(String filename) {
-        SaxList<Station> stations = new MyArrayList<>();
+    public static MyArrayList<Station> readStationsFromCSVFile(String filename) {
+        MyArrayList<Station> stations = new MyArrayList<>();
         try {
             Scanner sc = new Scanner(new File(filename));
             sc.nextLine();
