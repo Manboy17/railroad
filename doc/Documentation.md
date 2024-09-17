@@ -62,11 +62,34 @@ Implementation:
 ## My MinHeap
 Implementation:
 
-## My Stack
-Implementation:
+### My Queue
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyQueue.java)
 
-## My Queue
-Implementation:
+#### Explanation
+The MyQueue class is a queue implementation using a custom MyArrayList to store its elements. It implements the SaxQueue interface, providing standard queue operations like enqueue, dequeue, peek.  The main concept of this data structure is "First In, First Out", meaning that the first element added to the queue will be the first one to be removed. 
+
+#### Tests
+All tests can be found [here](../test/collection/MyQueueTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if queue is empty. 
+
+
+"WhenGivenQueue_WhileMakingChanges_ConfirmResultsAreCorrect" test ensures that elements are dequeued in the correct order and that peeking at the front of the queue correctly reflects the current state of the queue.
+
+"WhenGivenEmptyQueue_ConfirmItThrowsAnException" test ensures that the queue correctly handles operations when it is empty by throwing the appropriate exceptions
+
+
+
+### My Stack
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyStack.java)
+
+#### Explanation
+The MyStack class is a stack implementation using a custom MyArrayList to store its elements. It implements the SaxStack interface, providing standard stack operations like push, pop, and peek. The main concept of this data structure is "Last In, First Out", meaning that the most recently added element is the first one to be removed.
+
+#### Tests
+All tests can be found [here](../test/collection/MyStackTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if stack is empty. 
+
+"GivenEmptyStack_WhenPushingAndPoppingElements_ConfirmChangesAreCorrect" test ensures that pushing and popping elements to and from the stack changes the stack's size and content as expected. It also confirms that peeking reflects the correct top element without affecting the stack size.
+
+"GivenEmptyStack_WhenPeekingElement_ConfirmItThrowsException" test ensures that the stack correctly handles the peek operation by throwing the appropriate exception when the stack is empty.
 
 ## My Graph
 Implementation:
