@@ -7,7 +7,6 @@ import nl.saxion.cds.solution.MyArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
