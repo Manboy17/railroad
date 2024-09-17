@@ -4,10 +4,10 @@ import nl.saxion.cds.collection.EmptyCollectionException;
 import nl.saxion.cds.collection.SaxQueue;
 
 public class MyQueue<V> implements SaxQueue<V> {
-    private final MyArrayList<V> queue;
+    private final DoubleLinkedList<V> queue;
 
     public MyQueue() {
-        this.queue = new MyArrayList<>();
+        this.queue = new DoubleLinkedList<>();
     }
 
     @Override
