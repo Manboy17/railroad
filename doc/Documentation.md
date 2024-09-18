@@ -66,7 +66,11 @@ Implementation:
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyQueue.java)
 
 #### Explanation
-The MyQueue class is a queue implementation using a custom DoubleLinkedList (provides efficient O(1) time complexity for both enqueue and dequeue operations, avoids element shifting and dynamically manages size) to store its elements. It implements the SaxQueue interface, providing standard queue operations like enqueue, dequeue, peek.  The main concept of this data structure is "First In, First Out", meaning that the first element added to the queue will be the first one to be removed. 
+The MyQueue class is a queue implementation using a custom DoubleLinkedList to store its elements. It implements the SaxQueue interface, providing standard queue operations like enqueue, dequeue, peek.  The main concept of this data structure is "First In, First Out", meaning that the first element added to the queue will be the first one to be removed. 
+
+Using DoubleLinkedList is beneficial as it allows to:
+- Provide efficient O(1) time complexity for both enqueue and dequeue operations
+- Avoid element shifting and dynamically manage array size
 
 #### Tests
 All tests can be found [here](../test/collection/MyQueueTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if queue is empty. 
@@ -82,7 +86,11 @@ All tests can be found [here](../test/collection/MyQueueTest.java). Overall, i c
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyStack.java)
 
 #### Explanation
-The MyStack class is a stack implementation using a custom MyArrayList (provides efficient O(1) for all operations) to store its elements. It implements the SaxStack interface, providing standard stack operations like push, pop, and peek. The main concept of this data structure is "Last In, First Out", meaning that the most recently added element is the first one to be removed. 
+The MyStack class is a stack implementation using a custom DoubleLinkedList to store its elements. It implements the SaxStack interface, providing standard stack operations like push, pop, and peek. The main concept of this data structure is "Last In, First Out", meaning that the most recently added element is the first one to be removed. 
+
+Using DoubleLinkedList is beneficial as allows to:
+- Perform frequent insertions and deletions without worrying about resizing overhead.
+- Avoid the performance hit of dynamic resizing present in ArrayList.
 
 #### Tests
 All tests can be found [here](../test/collection/MyStackTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if stack is empty. 
