@@ -3,10 +3,10 @@ import nl.saxion.cds.collection.EmptyCollectionException;
 import nl.saxion.cds.collection.SaxStack;
 
 public class MyStack<V> implements SaxStack<V> {
-    private final MyArrayList<V> array;
+    private final DoubleLinkedList<V> array;
 
     public MyStack() {
-        this.array = new MyArrayList<>();
+        this.array = new DoubleLinkedList<>();
     }
 
     @Override
