@@ -239,8 +239,48 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
 
     @Override
     public String graphViz(String name) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+        builder.append("digraph ").append(name).append(" {\n");
+        builder.append("    rankdir=LR;\n");
+        builder.append("    node [shape=record];\n");
+
+        Node<V> current = head;
+        int index = 0;
+
+        while (current != null) {
+            builder.append("    ")
+                    .append(index)
+                    .append(" [label=\"{<prev> | <value> ")
+                    .append(current.value)
+                    .append(" | <next>}\"];\n");
+            current = current.next;
+            index++;
+        }
+
+        current = head;
+        index = 0;
+
+        while (current != null && current.next != null) {
+            builder.append("    ")
+                    .append(index)
+                    .append(":<next> -> ")
+                    .append(index + 1)
+                    .append(":<value> [arrowhead=vee, arrowtail=dot, dir=both, tailclip=false, arrowsize=1.2];\n");
+
+            builder.append("    ")
+                    .append(index + 1)
+                    .append(":<prev> -> ")
+                    .append(index)
+                    .append(":<value> [arrowhead=vee, arrowtail=dot, dir=both, tailclip=false, arrowsize=1.2];\n");
+
+            current = current.next;
+            index++;
+        }
+
+        builder.append("}");
+        return builder.toString();
     }
+
 
     private void checkIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {

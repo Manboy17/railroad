@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import nl.saxion.cds.solution.MyQueue;
 
-public class MyQueueTest {
+public class TestMyQueue {
     private MyQueue<Integer> queue;
 
     @BeforeEach

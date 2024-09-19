@@ -58,6 +58,8 @@ public class TestMyDoubleLinkedList {
         list.addLast("B");
         list.addLast("C");
 
+        System.out.println(list.graphViz());
+
         list.remove("A");
 
         assertEquals("[B, C]", list.toString());
