@@ -57,7 +57,26 @@ Another test moethod named [GivenListWithIntegers_WhenQuickSorted_ThenListIsSort
 Implementation:
 
 ## My HashMap
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyHashMap.java)
+
+#### Explanation
+The Bucket inner class is a simple container for storing key-value pairs. Each bucket can hold one key-value pair or be null. To create a custom HashMap, i have used MyArrayList implemented earlier due to its dynamic resizing. To implement it, i have used linear probing known for its technic to handle collisions in hash tables. When 2 or more keys hash to the same index, linear probing finds the next available slot in a sequential order. This is done by using this code:
+```
+index = key.hashCode() % capacity.
+```
+If the calculated index is occupied, it will search for the next open slot:
+```
+i = (i + 1) % buckets.size();
+```
+
+#### Tests
+To prove that all implemented methods work as expected, the [following tests](../test/collection/TestMyHashMap.java) have been written
+
+[GivenEmptyHashMap_WhenAddingValues_ConfirmTheResultsAreCorrect](../test/collection/TestMyHashMap.java) test checks if adding buckets work properly. We check map size, the value by its key, throw an exception if capacity is exceeded.
+[GivenHashMap_WhenRemovingValues_ConfirmTheResultsAreCorrect](../test/collection/TestMyHashMap.java) test checkes if removing a bucket works properly, map size changes accordingly, throw exception for invalid key. 
+
+Additional tests cover operations such as retrieving all keys and generating a graphViz representation.
+
 
 ## My MinHeap
 Implementation:
