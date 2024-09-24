@@ -237,6 +237,10 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
     }
 
 
+    /**
+     * Someone's post on StackOverflow helped me to implement this operation:
+     * https://stackoverflow.com/questions/70441786/draw-doubly-linked-list-using-graphviz
+     */
     @Override
     public String graphViz(String name) {
         StringBuilder builder = new StringBuilder();

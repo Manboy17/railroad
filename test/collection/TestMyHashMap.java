@@ -33,6 +33,7 @@ public class TestMyHashMap {
         assertEquals("two", map.get(26));
         assertTrue(map.contains(16));
         assertEquals("seven", map.get(16));
+        assertNull(map.get(99));
         System.out.println(map.graphViz("MyHashMap"));
 
         assertThrows(DuplicateKeyException.class, () -> map.add(62, "duplicate"));

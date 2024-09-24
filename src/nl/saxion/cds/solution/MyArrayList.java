@@ -48,7 +48,6 @@ public class MyArrayList<V> implements SaxList<V>, SaxSearchable<V>, SaxSortable
         checkAndExtendSize(size);  // Ignore invalid index => IndexOutOfBoundsException
         elements[size - 1] = value;
     }
-
     @Override
     public void addFirst(V value) {
         checkAndExtendSize(0); // Ignore invalid index => IndexOutOfBoundsException

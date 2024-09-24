@@ -24,7 +24,7 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
         buckets = new MyArrayList<>(capacity);
 
         for (int i = 0; i < capacity; i++) {
-            buckets.addLast(null);
+            buckets.addLast(new Bucket(null, null));
         }
     }
 
