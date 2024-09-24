@@ -51,10 +51,25 @@ One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmState
 
 The test ensures that after applying quick sort, the list is correctly sorted. 
 
-Another test moethod named [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/collection/TestMyArrayList.java): this test ensures not only that the sorting is done correctly, it also provides a validation by checking the list if it is sorted. 
+Another test method named [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/collection/TestMyArrayList.java): this test ensures not only that the sorting is done correctly, it also provides a validation by checking the list if it is sorted. 
 
 ## My BST
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyBST.java)
+
+#### Explanation
+The MyBST class implements a generic Binary Search Tree (BST) with nodes that hold key-value pairs. The class supports standard BST operations such as adding, removing, searching, and retrieving all keys, and provides visualization of the tree structure in GraphViz format. 
+
+In the absolute worst case, a binary tree with N elements would be like a linked list.
+Hence, there would be N levels, and a search would take N traversals. That's why it's O(N) in the worst case. And this is why we need to balance the trees to achieve O(log N) search. ([reference](https://medium.com/@samip.sharma963/binary-search-tree-and-its-big-o-f75eef7a985))
+
+#### Tests
+All tests can be founf [here](../test/collection/TestMyBST.java). Overall some tests overview:
+
+[GivenTree_WhenCheckingContains_ConfirmCorrectResults](../test/collection/TestMyBST.java) : It confirms that the method correctly identifies the presence of keys in a populated tree.
+
+[GivenTree_WhenGettingElements_ConfirmCorrectResults](../test/collection/TestMyBST.java) : This ensures that retrieval works accurately.
+
+[GivenTree_WhenMakeChanges_ConfirmExceptionsAreThrown](../test/collection/TestMyBST.java) : This test verifies that error handling works correctly. 
 
 ## My HashMap
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyHashMap.java)
@@ -68,6 +83,11 @@ If the calculated index is occupied, it will search for the next open slot:
 ```
 i = (i + 1) % buckets.size();
 ```
+
+The efficiency of the <b>"contains"</b> method depends on how well the hash function distributes keys across buckets. We have 2 cases:
+
+Average case, where most keys will be in different buckets. Time complexity is O(1).
+Worst case, where many keys collide, so the method may acheck several buckets one after the other. Time complexity is O(n).
 
 #### Tests
 To prove that all implemented methods work as expected, the [following tests](../test/collection/TestMyHashMap.java) have been written
@@ -95,9 +115,9 @@ Using DoubleLinkedList is beneficial as it allows to:
 All tests can be found [here](../test/collection/MyQueueTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if queue is empty. 
 
 
-"WhenGivenQueue_WhileMakingChanges_ConfirmResultsAreCorrect" test ensures that elements are dequeued in the correct order and that peeking at the front of the queue correctly reflects the current state of the queue.
+[WhenGivenQueue_WhileMakingChanges_ConfirmResultsAreCorrect](../test/collection/TestMyQueue.java) test ensures that elements are dequeued in the correct order and that peeking at the front of the queue correctly reflects the current state of the queue.
 
-"WhenGivenEmptyQueue_ConfirmItThrowsAnException" test ensures that the queue correctly handles operations when it is empty by throwing the appropriate exceptions
+[WhenGivenEmptyQueue_ConfirmItThrowsAnException](../test/collection/TestMyQueue.java) test ensures that the queue correctly handles operations when it is empty by throwing the appropriate exceptions
 
 
 
@@ -114,9 +134,9 @@ Using DoubleLinkedList is beneficial as allows to:
 #### Tests
 All tests can be found [here](../test/collection/MyStackTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if stack is empty. 
 
-"GivenEmptyStack_WhenPushingAndPoppingElements_ConfirmChangesAreCorrect" test ensures that pushing and popping elements to and from the stack changes the stack's size and content as expected. It also confirms that peeking reflects the correct top element without affecting the stack size.
+[GivenEmptyStack_WhenPushingAndPoppingElements_ConfirmChangesAreCorrect](../test/collection/TestMyStack.java) test ensures that pushing and popping elements to and from the stack changes the stack's size and content as expected. It also confirms that peeking reflects the correct top element without affecting the stack size.
 
-"GivenEmptyStack_WhenPeekingElement_ConfirmItThrowsException" test ensures that the stack correctly handles the peek operation by throwing the appropriate exception when the stack is empty.
+[GivenEmptyStack_WhenPeekingElement_ConfirmItThrowsException](../test/collection/TestMyStack.java) test ensures that the stack correctly handles the peek operation by throwing the appropriate exception when the stack is empty.
 
 ## My Graph
 Implementation:
