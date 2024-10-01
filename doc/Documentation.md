@@ -1,10 +1,12 @@
 # Algoritmen en klassen
 
-## MijnArrayList
+## MyArrayList
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
+MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. 
+
 ### My binary search algorithm
-Big-O complexity: O(Log(N))
+Big-O complexity: O(log(N))
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
@@ -35,6 +37,17 @@ One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmState
 - Correctness for specific elements: It verifies that the binary search correctly finds the specific element (first, last, second-to-last). For each element, it compares the value found at the retured index with the original element.
 - Handling missing elements: It tests for the element that is not present in the list.
 
+### My SimpleSort Algorithm
+Big-O complexity: O(n^2)
+
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
+
+#### Explanation
+For selection sort, the Big O time complexity is O(n²) because it involves two nested loops—one to iterate over the array and the other to find the smallest element. Selection sort works by ensuring that after each iteration, the smallest unsorted element is placed in its correct position in the list. By the end of the process, all elements are sorted. Firstly, we iterate over the list. During each iteration, another loop is created to search for the smallest element in the unsorted portion of the list. This loop compares each element with the current smallest element and then updates the smallest element index if a smaller element is found. The algorithm executes until the list is finally sorted. 
+
+#### Tests
+Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks multiple things, but it also makes sure that simple sort works as expected. We firstly check if elements at the beggining are not sorted and then sort them using this algorithm and theck 1 more time if list is really sorted then. 
+
 
 ### My QuickSort algorithm
 Big-O complexity: O(n log n)
@@ -47,11 +60,24 @@ The algorithm selects a "pivot" element from a list as a first element. The arra
 With regards to the time complexity, we divide the list into 2 roughly equal halves that requires a linear time O(n).  If the pivot divides the aaray each time, the number of levels in the recursion tree will be about Log n. Consequently, each level of the recursion requires O(n) time to partition nd there are O(log n) levels on average, the total time complexity will be O(n log n).
 
 #### Tests
-One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks for proper implemented algorithm:
+Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyArrayList.java) checks for proper implemented algorithm:
 
 The test ensures that after applying quick sort, the list is correctly sorted. 
 
-Another test method named [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/collection/TestMyArrayList.java): this test ensures not only that the sorting is done correctly, it also provides a validation by checking the list if it is sorted. 
+Another test [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/collection/TestMyArrayList.java): this test ensures not only that the sorting is done correctly, it also provides a validation by checking the list if it is sorted. 
+
+## DoubleLinkedList
+
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/DoubleLinkedList.java)
+
+### My LinearSearch Algorithm
+Big O complexity: O(n)
+
+#### Explanation
+This algorithm iterates over all nodes, starting from the head and moving towards the tail. Each iteration takes O(1), but since you mau need to loop over all n nodes, the overall time complexity is O(n). Worst cases, where element is not present or this is a tail. Firsly, we loop through each node and then check if the current node's value matches the element we are looking for. If it is equal - return its position, it not - move to the next node. 
+
+#### Tests
+Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyDoubleLinkedList.java) searches for an element using linear search. We get the first element from created list, then get the position of its element using linear search and compare the values. 
 
 ## My BST
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyBST.java)
@@ -63,7 +89,7 @@ In the absolute worst case, a binary tree with N elements would be like a linked
 Hence, there would be N levels, and a search would take N traversals. That's why it's O(N) in the worst case. And this is why we need to balance the trees to achieve O(log N) search. ([reference](https://medium.com/@samip.sharma963/binary-search-tree-and-its-big-o-f75eef7a985))
 
 #### Tests
-All tests can be founf [here](../test/collection/TestMyBST.java). Overall some tests overview:
+All tests can be found [here](../test/collection/TestMyBST.java). Overall some tests overview:
 
 [GivenTree_WhenCheckingContains_ConfirmCorrectResults](../test/collection/TestMyBST.java) : It confirms that the method correctly identifies the presence of keys in a populated tree.
 
