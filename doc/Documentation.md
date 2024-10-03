@@ -3,12 +3,12 @@
 ## MyArrayList
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
-MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. 
+MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. During the class we had a live coding session with our teacher, where he showed us the implementation of binary and linear searches. Additionally, we had a discussion about and code examples about simple and quick sorts. 
 
 ### My binary search algorithm
 Big-O complexity: O(log(N))
 
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java).
 
 #### Explanation
 I begin with a collection of sorted items, set 2 pointers: one at the beginning of the collection ans the other at the end. Then i divide the collection into 2 halves by finding the middle point. based on the comparison result i made with the target element, i move left pointer to just after the middle if the middle element is less than the target. Move the right pointer to just before the middle if the middle element is greater that the target. if the middle element is equal to the target, i return its pointion afterwards. Finally, if loop exits without finding the target, -1 will be returned. 
@@ -80,7 +80,7 @@ This algorithm iterates over all nodes, starting from the head and moving toward
 Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/collection/TestMyDoubleLinkedList.java) searches for an element using linear search. We get the first element from created list, then get the position of its element using linear search and compare the values. 
 
 ## My BST
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyBST.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyBST.java). Worth saying that our teacher showed us how to implement add, get, getKeys, graphViz methods. 
 
 #### Explanation
 The MyBST class implements a generic Binary Search Tree (BST) with nodes that hold key-value pairs. The class supports standard BST operations such as adding, removing, searching, and retrieving all keys, and provides visualization of the tree structure in GraphViz format. 
@@ -98,12 +98,13 @@ All tests can be found [here](../test/collection/TestMyBST.java). Overall some t
 [GivenTree_WhenMakeChanges_ConfirmExceptionsAreThrown](../test/collection/TestMyBST.java) : This test verifies that error handling works correctly. 
 
 ## My HashMap
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyHashMap.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyHashMap.java). Worth saying that our teacher showed us how to implement add, get, remove, getKeys, graphViz, toString methods.
 
 #### Explanation
 The Bucket inner class is a simple container for storing key-value pairs. Each bucket can hold one key-value pair or be null. To create a custom HashMap, i have used MyArrayList implemented earlier due to its dynamic resizing. To implement it, i have used linear probing known for its technic to handle collisions in hash tables. When 2 or more keys hash to the same index, linear probing finds the next available slot in a sequential order. This is done by using this code:
 ```
-index = key.hashCode() % capacity.
+int hashCode = key.hashCode();
+int index = Math.abs(hashCode) % buckets.size();
 ```
 If the calculated index is occupied, it will search for the next open slot:
 ```
@@ -125,7 +126,20 @@ Additional tests cover operations such as retrieving all keys and generating a g
 
 
 ## My MinHeap
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyMinHeap.java). Worth saying that our teacher showed us how to implement enqueue, dequeue, toString methods. 
+
+#### Explanation
+The minHeap is a type of data structure where the root element is always smaller than its child elements. This is done by 2 helper methods: percolateUp and percolateDown. PercolateUp method, which percolates a new item as far up in the tree as it needs to go to maintain the heap property. The percolateDown method ensures that the largest child is always moved down the tree. Because the heap is a complete binary tree, any nodes past the halfway point will be leaves and therefore have no children ([resource](https://runestone.academy/ns/books/published/javads/trees_binary-heap-implementation.html)). For my implementation i have used a custom MyArrayList due to its generic and it can be easity grown in size. 
+
+#### Tests
+
+All tests can be found [here](../test/collection/TestMyMinHeap.java). Overall, i check if all methods work as expected and throw EmptyCollectionException correctly. 
+
+[GivenNewHeap_WhenAddingExampleData_ConfirmSize](../test/collection/TestMyMinHeap.java) test ensures that enqueue method works correctly together with a toString method. We created a new heap and added some integer values. By the end we test the proper order of integers. 
+
+[GivenNewHeap_WhenRemovingExampleData_ConfirmSizeAndStructure](../test/collection/TestMyMinHeap.java) test ensures that dequeue works correctly together with a toString method. We created a new heap and added some integer values. We removed the root element and test the proper order of integers. 
+
+[GivenNewHeap_WhenMakeChanges_ConfirmExceptionsAreThrown](../test/collection/TestMyMinHeap.java) test ensures that exceptions are thrown where needed. 
 
 ### My Queue
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyQueue.java)
