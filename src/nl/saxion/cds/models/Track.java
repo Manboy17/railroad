@@ -35,29 +35,4 @@ public class Track {
     public double getDistance() {
         return distance;
     }
-
-    public static MyArrayList<Track> readTracksFromCSVFile(String filename) {
-        MyArrayList<Track> tracks = new MyArrayList<>();
-        try {
-            Scanner sc = new Scanner(new File(filename));
-            sc.nextLine();
-
-            while(sc.hasNextLine()) {
-                String line = sc.nextLine();
-                String[] values = line.split(",");
-
-                String from = values[0];
-                String to = values[1];
-                int cost_unit = Integer.parseInt(values[2]);
-                double distance = Double.parseDouble(values[3]);
-
-                tracks.addLast(new Track(from, to, cost_unit, distance));
-            }
-            sc.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return tracks;
-    }
 }

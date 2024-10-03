@@ -5,9 +5,10 @@ import nl.saxion.cds.solution.MyArrayList;
 
 import java.util.Scanner;
 
-public class TrackManager {
-    private static StationManager stationManager = new StationManager();
+public class Application {
+    private static ApplicationManager applicationManager = new ApplicationManager();
     private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         while(true) {
             displayMenu();
@@ -39,10 +40,20 @@ public class TrackManager {
     }
 
     private static void searchStationByCode() {
-        System.out.print("Station code: ");
-        String stationCode = sc.next();
-        Station station = stationManager.findStationByCode(stationCode);
-        System.out.println("Station information by " + stationCode + " code:");
+        Station station = null;
+
+        while (station == null) {
+            System.out.print("Station code: ");
+            String stationCode = sc.next();
+
+            station = applicationManager.findStationByCode(stationCode);
+
+            if (station == null) {
+                System.out.println("No information found!");
+            }
+        }
+
+        System.out.println("Station information:");
         System.out.println("-------------------------");
         System.out.println("Name: " + station.getName());
         System.out.println("Country: " + station.getCountry());
@@ -50,10 +61,11 @@ public class TrackManager {
         System.out.println("-------------------------");
     }
 
+
     private static void searchStationsByName() {
         System.out.print("Station name: ");
         String name = sc.next();
-        MyArrayList<Station> stations = stationManager.findStationsByName(name);
+        MyArrayList<Station> stations = applicationManager.findStationsByName(name);
         if(stations.size() > 1) {
             System.out.println("Stations found:");
             System.out.println("-------------------------");
@@ -91,7 +103,7 @@ public class TrackManager {
     private static void searchStationsByType() {
         System.out.print("Station type: ");
         String type = sc.next();
-        MyArrayList<Station> stations = stationManager.findStationsByType(type);
+        MyArrayList<Station> stations = applicationManager.findStationsByType(type);
         if(!stations.isEmpty()) {
             System.out.println("-------------------------");
             for (Station station: stations) {

@@ -73,7 +73,13 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
     }
 
     private int getIndex(K key) {
-        return key.hashCode() % buckets.size();
+        int hashCode = key.hashCode();
+        int index = Math.abs(hashCode) % buckets.size();
+
+        if (index < 0) {
+            index = 0;
+        }
+        return index;
     }
 
     /**
@@ -85,12 +91,12 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
         int index = getIndex(key);
         assert index >= 0 && index < buckets.size();
         int i = index;
-        while(true) {
+        while (true) {
             Bucket bucket = buckets.get(i);
-            if(bucket == null) {
+            if (bucket == null) {
                 return null;
             }
-            if(bucket.key != null && bucket.key.equals(key)) {
+            if (bucket.key != null && bucket.key.equals(key)) {
                 return bucket;
             }
             i = (i + 1) % buckets.size();

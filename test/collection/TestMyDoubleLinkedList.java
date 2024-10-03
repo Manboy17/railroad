@@ -61,7 +61,6 @@ public class TestMyDoubleLinkedList {
         System.out.println(list.graphViz());
 
         list.remove("A");
-
         assertEquals("[B, C]", list.toString());
         assertEquals(2, list.size());
         assertEquals("B", list.get(0));
