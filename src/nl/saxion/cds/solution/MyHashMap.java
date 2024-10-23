@@ -6,6 +6,7 @@ import nl.saxion.cds.collection.SaxHashMap;
 import nl.saxion.cds.collection.SaxList;
 
 public class MyHashMap<K, V> implements SaxHashMap<K, V> {
+
     private class Bucket {
         private K key;
         private V value;
@@ -38,40 +39,6 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
         return size;
     }
 
-    @Override
-    public String graphViz(String name) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("digraph " + name + " {\n");
-        int index = 0;
-        for (var bucket: buckets) {
-            if(bucket != null) {
-                builder.append("bucket_");
-                builder.append(index);
-                builder.append("[label=\"");
-                if(bucket == null) {
-                    builder.append("NULL");
-                } else {
-                    builder.append(index);
-                    builder.append(":");
-                    builder.append(bucket.key);
-                    builder.append(",");
-                    builder.append(bucket.value);
-                }
-                builder.append("\"]\n");
-                if (index < buckets.size() - 1) {
-                    builder.append("bucket_");
-                    builder.append(index);
-                    builder.append(" -> bucket_");
-                    builder.append(index+1);
-                }
-                builder.append("\n");
-            }
-            index++;
-        }
-        builder.append("}");
-        return builder.toString();
-    }
-
     private int getIndex(K key) {
         int hashCode = key.hashCode();
         int index = Math.abs(hashCode) % buckets.size();
@@ -93,10 +60,10 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
         int i = index;
         while (true) {
             Bucket bucket = buckets.get(i);
-            if (bucket == null) {
+            if (bucket.key == null) {
                 return null;
             }
-            if (bucket.key != null && bucket.key.equals(key)) {
+            if (bucket.key.equals(key)) {
                 return bucket;
             }
             i = (i + 1) % buckets.size();
@@ -168,6 +135,40 @@ public class MyHashMap<K, V> implements SaxHashMap<K, V> {
         }
 
         return list;
+    }
+
+    @Override
+    public String graphViz(String name) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("digraph " + name + " {\n");
+        int index = 0;
+        for (var bucket: buckets) {
+            if(bucket != null) {
+                builder.append("bucket_");
+                builder.append(index);
+                builder.append("[label=\"");
+                if(bucket == null) {
+                    builder.append("NULL");
+                } else {
+                    builder.append(index);
+                    builder.append(":");
+                    builder.append(bucket.key);
+                    builder.append(",");
+                    builder.append(bucket.value);
+                }
+                builder.append("\"]\n");
+                if (index < buckets.size() - 1) {
+                    builder.append("bucket_");
+                    builder.append(index);
+                    builder.append(" -> bucket_");
+                    builder.append(index+1);
+                }
+                builder.append("\n");
+            }
+            index++;
+        }
+        builder.append("}");
+        return builder.toString();
     }
 
     @Override

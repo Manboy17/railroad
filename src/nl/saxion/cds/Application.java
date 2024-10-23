@@ -10,12 +10,12 @@ public class Application {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        while(true) {
+        while (true) {
             displayMenu();
             System.out.print("Your input: ");
             int option = sc.nextInt();
 
-            switch(option) {
+            switch (option) {
                 case 1:
                     searchStationByCode();
                     break;
@@ -24,6 +24,9 @@ public class Application {
                     break;
                 case 3:
                     searchStationsByType();
+                    break;
+                case 4:
+                    showShortestRoute();
                     break;
                 default:
                     System.out.println("Invalid selection, try again!");
@@ -37,6 +40,7 @@ public class Application {
         System.out.println("1. Show a station information by its code");
         System.out.println("2. Show a station information by its name");
         System.out.println("3. List stations by type");
+        System.out.println("4. Show the shortest route between 2 stations:");
     }
 
     private static void searchStationByCode() {
@@ -66,10 +70,10 @@ public class Application {
         System.out.print("Station name: ");
         String name = sc.next();
         MyArrayList<Station> stations = applicationManager.findStationsByName(name);
-        if(stations.size() > 1) {
+        if (stations.size() > 1) {
             System.out.println("Stations found:");
             System.out.println("-------------------------");
-            for (int i=0; i<stations.size(); i++) {
+            for (int i = 0; i < stations.size(); i++) {
                 Station station = stations.get(i);
                 System.out.println((i + 1) + ": " + station.getName() + " (Code: " + station.getCode() + ")");
             }
@@ -77,7 +81,7 @@ public class Application {
             System.out.print("Select a station number you want to view: ");
             int option = sc.nextInt();
 
-            if(option > 0 && option <=stations.size()) {
+            if (option > 0 && option <= stations.size()) {
                 Station selectedStation = stations.get(option - 1);
                 System.out.println("-------------------------");
                 System.out.println("Name: " + selectedStation.getName());
@@ -85,7 +89,7 @@ public class Application {
                 System.out.println("Type: " + selectedStation.getType());
                 System.out.println("-------------------------");
             }
-        } else if(stations.size() == 1) {
+        } else if (stations.size() == 1) {
             System.out.println("Station found:");
             Station station = stations.get(0);
             System.out.println("-------------------------");
@@ -104,9 +108,9 @@ public class Application {
         System.out.print("Station type: ");
         String type = sc.next();
         MyArrayList<Station> stations = applicationManager.findStationsByType(type);
-        if(!stations.isEmpty()) {
+        if (!stations.isEmpty()) {
             System.out.println("-------------------------");
-            for (Station station: stations) {
+            for (Station station : stations) {
                 System.out.println(station.getName());
             }
             System.out.println("-------------------------");
@@ -115,5 +119,13 @@ public class Application {
             System.out.println("No stations were found by " + type + " type");
             System.out.println("-------------------------");
         }
+    }
+
+    private static void showShortestRoute() {
+        System.out.print("First station code: ");
+        String stationCode1 = sc.next();
+        System.out.print("Second station code: ");
+        String stationCode2 = sc.next();
+        applicationManager.determineShortestRoute(stationCode1, stationCode2);
     }
 }
