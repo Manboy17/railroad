@@ -83,15 +83,17 @@ public class TestMyGraph {
         graph.addEdge("A", "B", 1.5);
         graph.addEdge("B", "C", 2.5);
         graph.addEdge("C", "D", 3.5);
-        graph.addEdge("A", "D", 4.5);
+        graph.addEdge("A", "D", 10.0);
+        graph.addEdge("B", "D", 4.0);
 
         SaxGraph<String> result = graph.shortestPathsDijkstra("A");
-        assertEquals(4, result.size());
+        System.out.println(result.graphViz());
 
+        assertEquals(4, result.size());
         assertEquals(0.0, result.getEdges("A").get(0).weight());
         assertEquals(1.5, result.getEdges("B").get(0).weight());
         assertEquals(4.0, result.getEdges("C").get(0).weight());
-        assertEquals(4.5, result.getEdges("D").get(0).weight());
+        assertEquals(5.5, result.getEdges("D").get(0).weight());
     }
 
     @Test

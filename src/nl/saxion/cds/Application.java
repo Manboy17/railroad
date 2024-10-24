@@ -1,11 +1,15 @@
 package nl.saxion.cds;
 
+import nl.saxion.app.SaxionApp;
 import nl.saxion.cds.models.Station;
 import nl.saxion.cds.solution.MyArrayList;
 
 import java.util.Scanner;
 
-public class Application {
+public class Application implements Runnable {
+    private static final int MAP_WIDTH = 1620;
+    private static final int MAP_HEIGHT = 1920;
+    private static final int MAP_FACTOR = 2;
     private static ApplicationManager applicationManager = new ApplicationManager();
     private static Scanner sc = new Scanner(System.in);
 
@@ -28,10 +32,18 @@ public class Application {
                 case 4:
                     showShortestRoute();
                     break;
+                case 5:
+                    showMCST();
+                    break;
                 default:
                     System.out.println("Invalid selection, try again!");
             }
         }
+    }
+
+    @Override
+    public void run() {
+        SaxionApp.drawImage("resources/Nederland.png", 0, 0, MAP_WIDTH / MAP_FACTOR, MAP_HEIGHT / MAP_FACTOR);
     }
 
     private static void displayMenu() {
@@ -41,6 +53,7 @@ public class Application {
         System.out.println("2. Show a station information by its name");
         System.out.println("3. List stations by type");
         System.out.println("4. Show the shortest route between 2 stations:");
+        System.out.println("5. Show the minimum number of rail connections");
     }
 
     private static void searchStationByCode() {
@@ -127,5 +140,9 @@ public class Application {
         System.out.print("Second station code: ");
         String stationCode2 = sc.next();
         applicationManager.determineShortestRoute(stationCode1, stationCode2);
+    }
+
+    private static void showMCST() {
+        applicationManager.showMCST();
     }
 }

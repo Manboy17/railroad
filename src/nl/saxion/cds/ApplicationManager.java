@@ -1,6 +1,5 @@
 package nl.saxion.cds;
 
-import nl.saxion.app.SaxionApp;
 import nl.saxion.cds.collection.SaxGraph;
 import nl.saxion.cds.collection.SaxList;
 import nl.saxion.cds.models.Station;
@@ -14,39 +13,30 @@ import nl.saxion.cds.solution.MyHashMap;
 
 import java.util.Comparator;
 
-public class ApplicationManager implements Runnable {
-    private static final int MAP_WIDTH = 1620;
-    private static final int MAP_HEIGHT = 1920;
-    private static final int MAP_FACTOR = 2;
-    MyArrayList<Station> stations;
-    MyArrayList<Track> tracks;
+public class ApplicationManager {
+    private static Coordinate fromCoordinate;
+    private static Coordinate toCoordinate;
+
+    private MyArrayList<Station> stations;
+    private MyArrayList<Track> tracks;
     private MyHashMap<String, Station> stationMap;
     private MyGraph<String> graph;
 
-    public static void main(String[] args) {
-        SaxionApp.start(new ApplicationManager(), MAP_WIDTH / MAP_FACTOR, MAP_HEIGHT / MAP_FACTOR);
-        SaxionApp.drawImage("resources/Nederland.png", 0, 0, 810, 960);
-    }
-
     public ApplicationManager() {
-        run();
-    }
-
-    @Override
-    public void run() {
         var stationReader = new StationReader("resources/stations.csv");
         var trackReader = new TrackReader("resources/tracks.csv");
-        stations = stationReader.readStationsFromCSVFile();
-        tracks = trackReader.readTracksFromCSVFile();
 
-        stationMap = new MyHashMap<>(stations.size());
+        this.stations = stationReader.readStationsFromCSVFile();
+        this.tracks = trackReader.readTracksFromCSVFile();
+
+        this.stationMap = new MyHashMap<>(stations.size());
 
         for (Station station : stations) {
             String code = station.getCode();
             stationMap.add(code, station);
         }
 
-        graph = new MyGraph<>(stations.size());
+        this.graph = new MyGraph<>(stations.size());
         initializeGraph();
     }
 
@@ -58,14 +48,6 @@ public class ApplicationManager implements Runnable {
 
             graph.addEdgeBidirectional(fromCode, toCode, distance);
         }
-    }
-
-    public MyArrayList<Station> getStations() {
-        return stations;
-    }
-
-    public MyArrayList<Track> getTracks() {
-        return tracks;
     }
 
     public Station findStationByCode(String code) {
@@ -108,8 +90,8 @@ public class ApplicationManager implements Runnable {
                 return -1;
             }
 
-            Coordinate fromCoordinate = new Coordinate(from.getCoordinate().latitude(), from.getCoordinate().longitude());
-            Coordinate toCoordinate = new Coordinate(to.getCoordinate().latitude(), to.getCoordinate().longitude());
+            fromCoordinate = new Coordinate(from.getCoordinate().latitude(), from.getCoordinate().longitude());
+            toCoordinate = new Coordinate(to.getCoordinate().latitude(), to.getCoordinate().longitude());
 
             return Coordinate.haversineDistance(fromCoordinate, toCoordinate);
         };
@@ -130,4 +112,23 @@ public class ApplicationManager implements Runnable {
             System.out.println("No route found, try again!");
         }
     }
+
+    public void showMCST() {
+        SaxGraph<String> result = graph.minimumCostSpanningTree();
+
+        double totalLength = 0.0;
+        int connectionCount = 0;
+
+        for (String node : result) {
+            for (SaxGraph.DirectedEdge<String> edge : result.getEdges(node)) {
+                System.out.println(edge.from() + " <-> " + edge.to() + " (distance: " + edge.weight() + ")");
+                connectionCount++;
+                totalLength += edge.weight();
+            }
+        }
+
+        System.out.println("Total connections: " + connectionCount);
+        System.out.println("Total length: " + totalLength);
+    }
+
 }
