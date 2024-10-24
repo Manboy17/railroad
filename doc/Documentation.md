@@ -6,7 +6,7 @@ Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.ja
 MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. During the class we had a live coding session with our teacher, where he showed us the implementation of binary and linear searches. Additionally, we had a discussion about and code examples about simple and quick sorts. 
 
 ### My binary search algorithm
-Big-O complexity: O(log(N))
+Big-O complexity: O(log(N)) ([source](https://medium.com/@samip.sharma963/binary-search-and-its-big-o-3333d13bd6ec))
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java).
 
@@ -50,7 +50,7 @@ Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/colle
 
 
 ### My QuickSort algorithm
-Big-O complexity: O(n log n)
+Big-O complexity: O(n log n) ([source](https://www.tutorchase.com/answers/a-level/computer-science/what-is-the-big-o-notation-of-the-quicksort-algorithm))
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
@@ -126,7 +126,7 @@ Additional tests cover operations such as retrieving all keys and generating a g
 
 
 ## My MinHeap
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyMinHeap.java). Worth saying that our teacher showed us how to implement enqueue, dequeue, toString methods. 
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyMinHeap.java). Worth saying that our teacher showed us how to implement enqueue (percolateUp), dequeue (percolateDown), toString methods. 
 
 #### Explanation
 The minHeap is a type of data structure where the root element is always smaller than its child elements. This is done by 2 helper methods: percolateUp and percolateDown. PercolateUp method, which percolates a new item as far up in the tree as it needs to go to maintain the heap property. The percolateDown method ensures that the largest child is always moved down the tree. Because the heap is a complete binary tree, any nodes past the halfway point will be leaves and therefore have no children ([resource](https://runestone.academy/ns/books/published/javads/trees_binary-heap-implementation.html)). For my implementation i have used a custom MyArrayList due to its generic and it can be easity grown in size. 
@@ -159,8 +159,6 @@ All tests can be found [here](../test/collection/MyQueueTest.java). Overall, i c
 
 [WhenGivenEmptyQueue_ConfirmItThrowsAnException](../test/collection/TestMyQueue.java) test ensures that the queue correctly handles operations when it is empty by throwing the appropriate exceptions
 
-
-
 ### My Stack
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyStack.java)
 
@@ -172,39 +170,75 @@ Using DoubleLinkedList is beneficial as allows to:
 - Avoid the performance hit of dynamic resizing present in ArrayList.
 
 #### Tests
-All tests can be found [here](../test/collection/MyStackTest.java). Overall, i check if all methods work as expected and throw "EmptyCollectionException" exception if stack is empty. 
+All tests can be found [here](../test/collection/MyStackTest.java). Overall, I check if all methods work as expected and throw "EmptyCollectionException" exception if stack is empty. 
 
 [GivenEmptyStack_WhenPushingAndPoppingElements_ConfirmChangesAreCorrect](../test/collection/TestMyStack.java) test ensures that pushing and popping elements to and from the stack changes the stack's size and content as expected. It also confirms that peeking reflects the correct top element without affecting the stack size.
 
 [GivenEmptyStack_WhenPeekingElement_ConfirmItThrowsException](../test/collection/TestMyStack.java) test ensures that the stack correctly handles the peek operation by throwing the appropriate exception when the stack is empty.
 
 ## My Graph
-Implementation:
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyGraph.java)
+
+#### Explanation
+A graph is a type of data structure that has nodes and edges (connections between nodes). Each edge can be associated by a weight, meaning the distance between nodes. In my implementation, I have implemented useful methods to build the graph and well-known algorithms to solve issues. To store nodes, I have used a custom MyHashMap, because it allows easily to map over all nodes and get their neighbour edges. 
 
 ### My iterative depth first search algorithms
-Classificatie:
 
-Implementation:
+#### Classification: 
+O(V + E). Where V is number of nodes and E - number of edges. Every vertex is processed once, meaning O(V). For every vertex, we check its neighbour edges, contributing to O(E) time complexity. ([source](https://en.wikipedia.org/wiki/Depth-first_search)). DFS algorithm is used to explore all nodes in the graph using backtracking. 
 
-### My iterative breadth first search algorithm
-Classificatie:
+#### Implementation:
+(The code was developed by understanding the pseudo code from the sheets)
 
-Implementation:
+DFS traversal algorithm is part of the iterator implementation of MyGraph. Before all, I have used a stack to keep track of the nodes to be visited. Also, HashMap to keep the nodes we have already visited. During initialization, we push the head node to the stack. By default, iterator has hasNext() and hext() methods. When calling hasNext() we check if we have nodes to visit. We get the last added node from the stack, if this node has not been added to visited, we add it as visited and sets it to the nextValue to be returned. Moving on, we retrieve all the neighbour edges of the current node. Worth noticing, that we loop over neighbour edges in reverse order due to how stack works (LIFO). When we push neighbours to the stack in reverse order, the first neighbour added will be the last popped off the stack. Lastly, for each unvisited node, it pushes it to the stack. Finally, we return a boolean if nextValue is not equal to null. 
+next() method gets the next nodeValue. We initialize tempV  in order to set nextValue to null. We do this, because the nextValue won’t change and will return the same value all the time once next() is called.
+
+#### Tests
+
+[GivenEmptyGraph_WhenAddEdges_ConfirmDepthFirstSearchCorrect](../test/collection/TestMyGraph.java) test ensures that DFS algorithm works as expected. We create a graph, by adding edges. Then, we initialize an iterator and check if it traversesthough each node in depth-first order. We confirm that next node exists and that the actual visited node is equal to the expected.
 
 ### My Dijkstra algorithm
-Classification:
 
-Implementation:
+#### Classification:
+O ((V + E) log V). It is determined by the graph’s number of vertices and edges. Using priority queue operations leading us to O (log V) time complexity. ([source](https://www.geeksforgeeks.org/time-and-space-complexity-of-dijkstras-algorithm/)).
+
+#### Implementation:
+(The code was developed by understanding the pseudo code from the sheets)
+
+Dijkstra algorithm finds the shortest route from a starting node to all other nodes in a graph. For my implementation I have used MyHashMap to store the visited nodes and MyMinHeap (priority queue) to always get the least costly node next. When the algorithm starts, it creates the variables to store the data and the result. Then it enqueues the starting node with a 0 distance. It enters the loop, where it dequeues the node with the smallest distance and add it to visited nodes and to the result graph. For each of its unvisited neighbours, it calculates a new distance. This process is happening until we have reached all the nodes and finally return the result as a graph. 
+
+#### Tests
+
+[GivenEmptyGraph_WhenAddPaths_ConfirmDijkstraCorrect](../test/collection/TestMyGraph.java) test ensures Dijkstra algorithm works as expected.We create a graph, by adding edges. The we apply Dijkstra algorithm for the first "A" node. The result graph should be equal to 4. Finally, we check the weights of the edges from "A" node.  
 
 ### My A* algorithm
-Classification:
 
-Implementation:
+#### Classification: 
+This is a pathfinding algorithm that uses a heuristic estimate to establich its shortest route between two nodes. It uses the cost from the starting node and the estimated cost to the goal node. Time complexity depends on the quality of the heuristic function. In the worst cases - O(b^d), where b - number of edges from each node and d - number of nodes on the resulting path. The better the heuristic function, the less of these nodes need to be visited, and so the complexity drops. ([source](https://www.baeldung.com/cs/a-star-algorithm)).
+
+#### Implementation:
+(The code was developed by understanding the pseudo code from the sheets)
+
+To implement this algorithm, I have used 2 data structures: MyMinHeap (priority queue) - openList. This helps us to store the nodes to be explored and retrieve them with the lowest total estimated cost. MyHashMap - closedList, where we keep the nodes that have been explored to avoid it checking multiple times. 
+
+The algorithm begins by creating a startNode, with inital cost 0 and calculating its heuristic cost from entered both start and end nodes. Every time, it gets the nodes with the lowest cost from the priority queue. If we reached the goal - we found the shortest route and it reconstructs the path using reconstructPath() method. Basically, it moves back from the goal node to the start one, by following its nodes’s parent. In this algorithm, I have used AStarNode, representing each node. It has useful attributes, such as parent, that helps us to keep the reference to the previous node, so we can reconstruct the path. 
+ If the goal node has not been reached - we explore all nodes’s neighbours of the current node. For each neighbour, it calculates the actual cost from the start node to the neighbour and then from this neighbour to the endNode (goal). If the current node is not in the closedList, meaning that it has not been explored yet, it gets added to the openList with its calculated costs. Finally, if the shortest route was not found, it returns an empty list. 
+
+#### Tests
+
+[GivenEmptyGraph_WhenAddPaths_ConfirmAStarCorrect](../test/collection/TestMyGraph.java) test ensures that A* algorithm works as expected. Then, we use the algorithm to find the shortest route bentween 2 nodes. As a result, we should get 2 edges. We check that each edge has the correct associated weight.
+
+[GivenEmptyGraph_WhenAddPaths_ConfirmReturnsEmptyArray](../test/collection/TestMyGraph.java) test ensures that the shortest route won't be found for a non-existing node. 
 
 ### My MCST algorithm  
-Classification:
 
-Implementation:
+#### Classification:
+It always depends. In the best scenario is O (E log V), where E - number of edges and V - number of vertices. The algorithm in each iteration selects the smallest weight edge due to priority queue. In the worst cases - O ((V + E) log V), when queue operations lead to the logarithmic time. ([source1](https://www.quora.com/What-is-the-best-algorithm-in-time-complexity-to-compute-the-minimum-spanning-tree-in-a-complete-graph)) - Assistant reply. ([source2](https://www.geeksforgeeks.org/time-and-space-complexity-analysis-of-prims-algorithm/)). 
+
+#### Implementation:
+(The code was developed by understanding the Prim's logic in the sheets)
+
+MCST algorithm, used with Prim algorithm to find the minimum possible total edge weight. For this implementation, I have used MyMinHeap (priority queue) to keep the edges to explore with the lowest weight first, MyHashMap to kepp track of explored nodes. Firstly, we add the first node to visisted (can be any node), then we add all the edges connected to the start node to the priority queue. While queue is not empty, we get the edge with the lowest weight from the queue. If the destination node of this node has already been visisted, we continue the process. If this is not true, we then add edge to the result graph and immediately mark the connected node as visited. After that, we again look for its neighbours. If these connected nodes have npt been visited yet, we add them to the queue. Once the queue is empty, it means that we have made the minimum cost spanning tree and return the result. 
 
 # Technical design My Application
 
