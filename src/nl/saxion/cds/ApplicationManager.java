@@ -1,5 +1,6 @@
 package nl.saxion.cds;
 
+import nl.saxion.app.SaxionApp;
 import nl.saxion.cds.collection.SaxGraph;
 import nl.saxion.cds.collection.SaxList;
 import nl.saxion.cds.models.Station;
@@ -11,12 +12,10 @@ import nl.saxion.cds.solution.MyArrayList;
 import nl.saxion.cds.solution.MyGraph;
 import nl.saxion.cds.solution.MyHashMap;
 
+import java.awt.*;
 import java.util.Comparator;
 
 public class ApplicationManager {
-    private static Coordinate fromCoordinate;
-    private static Coordinate toCoordinate;
-
     private MyArrayList<Station> stations;
     private MyArrayList<Track> tracks;
     private MyHashMap<String, Station> stationMap;
@@ -50,6 +49,10 @@ public class ApplicationManager {
         }
     }
 
+    public MyGraph<String> getGraph() {
+        return graph; // Бушинка село - Дуня
+    }
+
     public Station findStationByCode(String code) {
         return stationMap.get(code);
     }
@@ -80,8 +83,8 @@ public class ApplicationManager {
         return foundStations;
     }
 
-    public void determineShortestRoute(String stationCode1, String stationCode2) {
-
+    public MyArrayList<String> determineShortestRoute(String stationCode1, String stationCode2) {
+        MyArrayList<String> route = new MyArrayList<>();
         SaxGraph.Estimator<String> estimator = (fromStationCode, toStationCode) -> {
             Station from = findStationByCode(stationCode1);
             Station to = findStationByCode(stationCode2);
@@ -90,8 +93,8 @@ public class ApplicationManager {
                 return -1;
             }
 
-            fromCoordinate = new Coordinate(from.getCoordinate().latitude(), from.getCoordinate().longitude());
-            toCoordinate = new Coordinate(to.getCoordinate().latitude(), to.getCoordinate().longitude());
+            Coordinate fromCoordinate = new Coordinate(from.getCoordinate().latitude(), from.getCoordinate().longitude());
+            Coordinate toCoordinate = new Coordinate(to.getCoordinate().latitude(), to.getCoordinate().longitude());
 
             return Coordinate.haversineDistance(fromCoordinate, toCoordinate);
         };
@@ -105,15 +108,17 @@ public class ApplicationManager {
             for (SaxGraph.DirectedEdge<String> edge : edges) {
                 System.out.println(edge.from() + " -> " + edge.to() + " (distance: " + edge.weight() + ")");
                 totalDistance += edge.weight();
+                route.addLast(edge.from());
             }
-
             System.out.println("Total distance: " + totalDistance);
         } else {
             System.out.println("No route found, try again!");
         }
+
+        return route;
     }
 
-    public void showMCST() {
+    public SaxGraph<String> showMCST() {
         SaxGraph<String> result = graph.minimumCostSpanningTree();
 
         double totalLength = 0.0;
@@ -129,6 +134,7 @@ public class ApplicationManager {
 
         System.out.println("Total connections: " + connectionCount);
         System.out.println("Total length: " + totalLength);
-    }
 
+        return result;
+    }
 }
