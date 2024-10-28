@@ -1,6 +1,5 @@
 package nl.saxion.cds;
 
-import nl.saxion.app.SaxionApp;
 import nl.saxion.cds.collection.SaxGraph;
 import nl.saxion.cds.collection.SaxList;
 import nl.saxion.cds.models.Station;
@@ -12,7 +11,6 @@ import nl.saxion.cds.solution.MyArrayList;
 import nl.saxion.cds.solution.MyGraph;
 import nl.saxion.cds.solution.MyHashMap;
 
-import java.awt.*;
 import java.util.Comparator;
 
 public class ApplicationManager {
@@ -50,7 +48,7 @@ public class ApplicationManager {
     }
 
     public MyGraph<String> getGraph() {
-        return graph; // Бушинка село - Дуня
+        return graph;
     }
 
     public Station findStationByCode(String code) {

@@ -69,10 +69,10 @@ public class Application implements Runnable {
 
         if (option == 4) {
             displayShortestRoute();
+        } else if (option == 5) {
+            displayMCST();
         } else if (option == 6) {
             displayRailNetwork();
-        } else if(option == 5) {
-            displayMCST();
         }
     }
 
@@ -236,13 +236,13 @@ public class Application implements Runnable {
     }
 
     public void displayMCST() {
-        if(!mcst.isEmpty()) {
-            for (String connection: mcst) {
+        if (!mcst.isEmpty()) {
+            for (String connection : mcst) {
                 Station station = applicationManager.findStationByCode(connection);
                 Point stationPoint = convertCoordinate(station.getCoordinate());
                 drawStation(stationPoint, Color.GREEN, 5);
 
-                for (SaxGraph.DirectedEdge<String> edge: mcst.getEdges(connection)) {
+                for (SaxGraph.DirectedEdge<String> edge : mcst.getEdges(connection)) {
                     String code = edge.to();
                     Station toStation = applicationManager.findStationByCode(code);
                     Point toStationPoint = convertCoordinate(toStation.getCoordinate());

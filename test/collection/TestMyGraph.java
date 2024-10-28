@@ -4,7 +4,9 @@ import nl.saxion.cds.collection.SaxGraph;
 import nl.saxion.cds.collection.SaxList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import nl.saxion.cds.solution.MyGraph;
 
 import java.util.Iterator;
@@ -104,17 +106,20 @@ public class TestMyGraph {
         graph.addEdge("A", "D", 10.0);
         graph.addEdge("B", "D", 4.0);
 
+        System.out.println(graph.graphViz());
+
         SaxList<SaxGraph.DirectedEdge<String>> result = graph.shortestPathAStar("A", "D", (current, target) -> 0.0);
         assertEquals(2, result.size());
 
         SaxGraph.DirectedEdge<String> edge1 = result.get(0);
-        assertEquals("B", edge1.from());
-        assertEquals("D", edge1.to());
-        assertEquals(4.0, edge1.weight());
+        assertEquals("A", edge1.from());
+        assertEquals("B", edge1.to());
+        assertEquals(1.5, edge1.weight());
+
         SaxGraph.DirectedEdge<String> edge2 = result.get(1);
-        assertEquals("A", edge2.from());
-        assertEquals("B", edge2.to());
-        assertEquals(1.5, edge2.weight());
+        assertEquals("B", edge2.from());
+        assertEquals("D", edge2.to());
+        assertEquals(4.0, edge2.weight());
     }
 
     @Test

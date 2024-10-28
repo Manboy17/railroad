@@ -124,12 +124,11 @@ public class MyGraph<V> implements SaxGraph<V> {
 
     private SaxList<SaxGraph.DirectedEdge<V>> reconstructPath(AStarNode<V> currentNode) {
         MyArrayList<DirectedEdge<V>> result = new MyArrayList<>();
-        AStarNode<V> current = currentNode;
-        while (current != null) {
-            if (current.edge != null) {
-                result.addLast(current.edge);
+        while (currentNode != null) {
+            if (currentNode.edge != null) {
+                result.addFirst(currentNode.edge);
             }
-            current = current.parent;
+            currentNode = currentNode.parent;
         }
         return result;
     }

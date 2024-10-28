@@ -34,6 +34,7 @@ public class TestMyMinHeap {
     @Test
     void GivenNewHeap_WhenAddingExampleData_ConfirmSize() {
         MyMinHeap<Integer> minHeap = buildMinHeap();
+        System.out.println(minHeap.graphViz("minHeap"));
 
         assertFalse(minHeap.isEmpty());
         assertEquals(10, minHeap.size());

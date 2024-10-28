@@ -19,7 +19,7 @@ public class MyMinHeap<V extends Comparable<V>> implements SaxHeap<V> {
 
     @Override
     public String graphViz(String name) {
-        return null;
+        return elements.graphViz(name);
     }
 
     private int getLeftChildIndex(int parentIndex) {
