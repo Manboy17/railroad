@@ -81,8 +81,8 @@ public class Application implements Runnable {
         System.out.println("Select one option:");
         System.out.println("1. Show a station information by its code");
         System.out.println("2. Show a station information by its name");
-        System.out.println("3. List stations by type");
-        System.out.println("4. Show the shortest route between 2 stations:");
+        System.out.println("3. Show stations by type");
+        System.out.println("4. Show the shortest route between 2 stations");
         System.out.println("5. Show the minimum number of rail connections");
         System.out.println("6. Show rail network");
     }
@@ -189,7 +189,7 @@ public class Application implements Runnable {
         for (String connection : connections) {
             Station station = applicationManager.findStationByCode(connection);
             Point stationPoint = convertCoordinate(station.getCoordinate());
-            drawStation(stationPoint, Color.GREEN, 5);
+            drawStation(stationPoint, Color.GREEN, 3);
 
             for (SaxGraph.DirectedEdge<String> edge : connections.getEdges(connection)) {
                 String code = edge.to();
@@ -219,7 +219,7 @@ public class Application implements Runnable {
                 String stationCode = route.get(i);
                 Station station = applicationManager.findStationByCode(stationCode);
                 Point stationPoint = convertCoordinate(station.getCoordinate());
-                drawStation(stationPoint, Color.GREEN, 5);
+                drawStation(stationPoint, Color.GREEN, 3);
 
                 if (i > 0) {
                     SaxionApp.setBorderColor(Color.ORANGE);
@@ -240,7 +240,7 @@ public class Application implements Runnable {
             for (String connection : mcst) {
                 Station station = applicationManager.findStationByCode(connection);
                 Point stationPoint = convertCoordinate(station.getCoordinate());
-                drawStation(stationPoint, Color.GREEN, 5);
+                drawStation(stationPoint, Color.GREEN, 3);
 
                 for (SaxGraph.DirectedEdge<String> edge : mcst.getEdges(connection)) {
                     String code = edge.to();
@@ -266,7 +266,7 @@ public class Application implements Runnable {
     }
 
     private static void drawStation(Point point, Color color, int radius) {
-        SaxionApp.setBorderColor(Color.GREEN);
+        SaxionApp.setBorderColor(Color.RED);
         SaxionApp.setBorderSize(1);
         SaxionApp.setFill(color);
         SaxionApp.drawCircle((int) point.getX(), (int) point.getY(), radius);

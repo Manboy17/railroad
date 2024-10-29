@@ -63,10 +63,10 @@ public class TestMyGraph {
 
     @Test
     void GivenEmptyGraph_WhenAddEdges_ConfirmDepthFirstSearchCorrect() {
-        graph.addEdge("A", "B", 1.5);
-        graph.addEdge("B", "C", 2.5);
-        graph.addEdge("C", "D", 3.5);
-        graph.addEdge("A", "D", 4.5);
+        graph.addEdgeBidirectional("A", "B", 1.5);
+        graph.addEdgeBidirectional("B", "C", 2.5);
+        graph.addEdgeBidirectional("C", "D", 3.5);
+        graph.addEdgeBidirectional("A", "D", 4.5);
 
         Iterator<String> iterator = graph.iterator();
         assertTrue(iterator.hasNext());
@@ -133,24 +133,41 @@ public class TestMyGraph {
 
     @Test
     void GivenEmptyGraph_WhenAddPaths_ConfirmMCSTCorrect() {
-        graph.addEdge("A", "B", 1.5);
-        graph.addEdge("B", "C", 2.5);
-        graph.addEdge("C", "D", 3.5);
-        graph.addEdge("A", "D", 4.5);
-        graph.addEdge("B", "D", 4.0);
+        graph.addEdgeBidirectional("a", "b", 4);
+        graph.addEdgeBidirectional("a", "h", 8);
+        graph.addEdgeBidirectional("b", "h", 11);
+        graph.addEdgeBidirectional("b", "c", 8);
+        graph.addEdgeBidirectional("c", "i", 2);
+        graph.addEdgeBidirectional("c", "f", 4);
+        graph.addEdgeBidirectional("c", "d", 7);
+        graph.addEdgeBidirectional("d", "e", 9);
+        graph.addEdgeBidirectional("d", "f", 14);
+        graph.addEdgeBidirectional("e", "f", 10);
+        graph.addEdgeBidirectional("f", "g", 2);
+        graph.addEdgeBidirectional("g", "h", 1);
+        graph.addEdgeBidirectional("g", "i", 6);
+        graph.addEdgeBidirectional("h", "i", 7);
 
         SaxGraph<String> result = graph.minimumCostSpanningTree();
+
         System.out.println(result.graphViz());
-        assertEquals(4, result.size());
-        assertEquals(7.5, result.getTotalWeight());
+        assertEquals(37, result.getTotalWeight());
+        assertEquals(9, result.size());
 
+        assertEquals(2, result.getEdges("d").size());
+        assertEquals(7.0, result.getEdges("d").get(0).weight());
+        assertEquals(9.0, result.getEdges("d").get(1).weight());
 
-        assertEquals(1.5, result.getEdges("A").get(0).weight());
-        assertEquals(1, result.getEdges("A").size());
-        assertEquals(2.5, result.getEdges("B").get(0).weight());
-        assertEquals(1, result.getEdges("B").size());
-        assertEquals(3.5, result.getEdges("C").get(0).weight());
-        assertEquals(1, result.getEdges("C").size());
-        assertEquals(0, result.getEdges("D").size());
+        assertEquals(0, result.getEdges("e").size());
+
+        assertEquals(2, result.getEdges("c").size());
+        assertEquals(2.0, result.getEdges("c").get(0).weight());
+        assertEquals(4.0, result.getEdges("c").get(1).weight());
+
+        assertEquals(2.0, result.getEdges("f").get(0).weight());
+        assertEquals(1.0, result.getEdges("g").get(0).weight());
+        assertEquals(8.0, result.getEdges("h").get(0).weight());
+        assertEquals(4.0, result.getEdges("a").get(0).weight());
+        assertEquals(0, result.getEdges("b").size());
     }
 }

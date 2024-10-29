@@ -159,6 +159,7 @@ public class MyGraph<V> implements SaxGraph<V> {
         MyHashMap<V, Boolean> visited = new MyHashMap<>(nodes.size());
 
         V startNode = (V) nodes.getKeys().get(0);
+        System.out.println("Start node: " + startNode);
         visited.add(startNode, true);
 
         for (DirectedEdge<V> neighbourEdge : getEdges(startNode)) {
@@ -167,15 +168,16 @@ public class MyGraph<V> implements SaxGraph<V> {
 
         while (!queue.isEmpty()) {
             DirectedEdge<V> edge = queue.dequeue();
+            System.out.println(edge);
 
-            if (visited.contains(edge.to())) continue;
+            if (!visited.contains(edge.to())) {
+                result.addEdge(edge.from(), edge.to(), edge.weight());
+                visited.add(edge.to(), true);
 
-            result.addEdge(edge.from(), edge.to(), edge.weight());
-            visited.add(edge.to(), true);
-
-            for (DirectedEdge<V> neighbourEdge : getEdges(edge.to())) {
-                if (!visited.contains(neighbourEdge.to())) {
-                    queue.enqueue(neighbourEdge);
+                for (DirectedEdge<V> neighbourEdge : getEdges(edge.to())) {
+                    if (!visited.contains(neighbourEdge.to())) {
+                        queue.enqueue(neighbourEdge);
+                    }
                 }
             }
         }

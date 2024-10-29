@@ -12,6 +12,7 @@ import nl.saxion.cds.solution.MyGraph;
 import nl.saxion.cds.solution.MyHashMap;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class ApplicationManager {
     private MyArrayList<Station> stations;
@@ -29,11 +30,13 @@ public class ApplicationManager {
         this.stationMap = new MyHashMap<>(stations.size());
 
         for (Station station : stations) {
-            String code = station.getCode();
-            stationMap.add(code, station);
+            if (station.getCountry().equals("NL")) {
+                String code = station.getCode();
+                stationMap.add(code, station);
+            }
         }
 
-        this.graph = new MyGraph<>(stations.size());
+        this.graph = new MyGraph<>(stationMap.size());
         initializeGraph();
     }
 
@@ -43,7 +46,9 @@ public class ApplicationManager {
             String toCode = track.getTo();
             double distance = track.getDistance();
 
-            graph.addEdgeBidirectional(fromCode, toCode, distance);
+            if (stationMap.contains(fromCode) && stationMap.contains(toCode)) {
+                graph.addEdgeBidirectional(fromCode, toCode, distance);
+            }
         }
     }
 
@@ -104,11 +109,11 @@ public class ApplicationManager {
             System.out.println("Shortest path from " + stationCode1 + " to " + stationCode2 + ":");
 
             for (SaxGraph.DirectedEdge<String> edge : edges) {
-                System.out.println(edge.from() + " -> " + edge.to() + " (distance: " + edge.weight() + ")");
+                System.out.println(edge.from() + " -> " + edge.to() + " (distance: " + edge.weight() + " km)");
                 totalDistance += edge.weight();
                 route.addLast(edge.from());
             }
-            System.out.println("Total distance: " + totalDistance);
+            System.out.println("Total distance: " + totalDistance + " km");
         } else {
             System.out.println("No route found, try again!");
         }
@@ -118,20 +123,25 @@ public class ApplicationManager {
 
     public SaxGraph<String> showMCST() {
         SaxGraph<String> result = graph.minimumCostSpanningTree();
+        System.out.println(result.size()); // 397 size
 
         double totalLength = 0.0;
         int connectionCount = 0;
 
-        for (String node : result) {
+        Iterator<String> iterator = result.iterator();
+
+        while (iterator.hasNext()) {
+            String node = iterator.next();
+
             for (SaxGraph.DirectedEdge<String> edge : result.getEdges(node)) {
-                System.out.println(edge.from() + " <-> " + edge.to() + " (distance: " + edge.weight() + ")");
+                System.out.println(edge.from() + " <-> " + edge.to() + " (distance: " + edge.weight() + " km)");
                 connectionCount++;
                 totalLength += edge.weight();
             }
         }
 
-        System.out.println("Total connections: " + connectionCount);
-        System.out.println("Total length: " + totalLength);
+        System.out.println("Total connections: " + connectionCount); // 3, why??
+        System.out.println("Total length: " + totalLength + " km");
 
         return result;
     }
