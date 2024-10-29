@@ -180,7 +180,7 @@ All tests can be found [here](../test/collection/MyStackTest.java). Overall, I c
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyGraph.java)
 
 #### Explanation
-A graph is a type of data structure that has nodes and edges (connections between nodes). Each edge can be associated by a weight, meaning the distance between nodes. In my implementation, I have implemented useful methods to build the graph and well-known algorithms to solve issues. To store nodes, I have used a custom MyHashMap, because it allows easily to map over all nodes and get their neighbour edges. 
+A graph is a type of data structure that has nodes and edges (connections between nodes). Each edge can be associated by a weight, meaning the distance between nodes. In my implementation, I have implemented useful methods to build the graph and well-known algorithms to solve issues. To store nodes, I have used a custom MyHashMap, because it allows easily to map over all nodes and get their neighbour edges. I prefered a custom MyArrayList inside MyHashMap to store node’s edges, because, in my opinion, it is better for managing path. We can easily access the edges of each node and iterate over them.  
 
 ### My iterative depth first search algorithms
 
@@ -241,15 +241,83 @@ It always depends. In the best scenario is O (E log V), where E - number of edge
 MCST algorithm, used with Prim algorithm to find the minimum possible total edge weight. For this implementation, I have used MyMinHeap (priority queue) to keep the edges to explore with the lowest weight first, MyHashMap to kepp track of explored nodes. Firstly, we add the first node to visisted (can be any node), then we add all the edges connected to the start node to the priority queue. While queue is not empty, we get the edge with the lowest weight from the queue. If the destination node of this node has already been visisted, we continue the process. If this is not true, we then add edge to the result graph and immediately mark the connected node as visited. After that, we again look for its neighbours. If these connected nodes have npt been visited yet, we add them to the queue. Once the queue is empty, it means that we have made the minimum cost spanning tree and return the result. 
 
 # Technical design My Application
+![image](../resources/ApplicationDiagram.png)
+
+The Application class is the main part of the console application and helps coordinate all the different parts of the railway network management system. It uses several supporting classes, such as the Station and Track classes. It also uses ApplicationManager class to handle all the logic. (depth explanation below)
+
+![image](../resources/ApplicationManagerDiagram.png)
+
+The ApplicationManager class is the main component where the logic of the railway network system is implemented. It coordinates data loading, station lookups, route calculations, and minimum cost spanning tree. 
+ApplicationManager() constructor: 
+The constructor initializes the ApplicationManager by reading station and track data from CSV files. Creating additional data strctures for requirements. 
+* stations: MyArrayList<Station> that stores the list of all stations loaded from the CSV file.
+* tracks: MyArrayList<Track> containing all the track connections between stations.
+* stationMap: MyHashMap<String, Station> that maps station codes (unique identifiers) to Station objects for quick lookup.
+* graph: MyGraph<String> structure that represents the railway network as a graph. 
+
+### Methods Explanation (depth explanation below)
+#### initializeGraph()
+This private method sets up the graph by adding bidirectional edges between stations based on the tracks. Each track represents a connection between two stations, and the method adds this relationship to the graph along with the distance.
+
+
+#### findStationByCode()
+This method allows to easily find any station by its identifier - code. 
+
+
+#### findStationsByName()
+This method allows to easily find any stations by name.
+
+#### findStationsByType()
+This method retrieves all stations that match a specific type.
+
+#### determineShortestRoute()
+This method calculates the shortest route between two stations using the A* algorithm. It uses the Haversine formula to esitmate the distance between 2 stations. It also shows the result in the console. 
+
+#### showMCST()
+This method connects all stations with the least total track distance and show the results in the console. 
 
 ## Class diagram and reading the data
 
+![image](../resources/ReadingDataDiagram.png)
+
+The ApplicationManager uses StationReader and TrackReader classes to read data from CSV files. Both are stored inside the custom MyArrayList. ArrayList was choosen due to dynamic rezising and easy access elements at any place. An ilternative could be the custom DoubleLinkedList, but using it would result in slower access time and higher memory usage. [MyArrayList Explanation](#myarraylist) and [DoubleLinkedList Explanation](#doublelinkedlist)
+
 # Station search by station code
+
+The method findStationByCode retrieves a station from the custom MyHashMap, where each station’s code is a key and the associated station is a value. I have decided to use this implementation based on the unique station code, that will ensure that we only get one station. An alternative could be the custom MyArrayList. In this case, time complexity would depend on the stations size, because it will have to go over all stations to find the exact code, meaning it would be less efficient. 
 
 # Station search based on the beginning of the name
 
+The method findStationsByName finds all stations that start with the given substring. I have decided to use the custom MyArrayList, because it is easy to impement and the insertion order remains unchanged. To implement this requirement I looped over all stations and created a condition that would match the provided substring with all possible names using «startsWith» string method. An alternative data structure could be the custom MyHashMap, where the key would be a substirng of station names, and the value would be an array of all stations that start with that substring. However, if we want to get not a single station, but all possible matches, it makes the implementation harder. In my opinion, this approach would probably reduce the time complexity for lookups. 
+
+# Station search based on the type
+
+The method findStationByType finds all stations that match a specific type. I have decided to use the custom MyArrayList, similar to findStationByName method, because it allows for easy implementation and maintains the insertion order.
+To implement this, I looped over all stations and created a condition to check if the station’s type metches the provided type using «equals» string method. After calling all matching stations, I used simpleSort method, implemented inside MyArrayList to sort stations in alphabetical order by name. An alternative data structure would be the custom MyHashMap, where the key would be the station type and the value would be MyArrayList containing all stations of that type. However, in my opinion, this would result in more complex implementation using multiple lists for above said logic. 
+
 ## Implementation shortest route
+
+The determineShortestRoute() method is used to determine the shortest route between two stations using a heuristic for distance estimation. Brief explanation about A* algorithm implementation [here](#my-a-algorithm).
+This method receives 2 station codes from user, where we find the actual stations using findStationByCode() method implemented earlier. We need them to make an estimate from one station to another using heuristic function. Then we use shortestPathAStar algorithm from SaxGraph interface. After the shortest route has been found, we calculate the total distance and display the found route by looping over each node’s neighbour and get their weight. 
+To store the found path, I could use either the customer MyArrayList or DoubleLinkedList. In my opinion, using MyArrayList is better option, because the time complexity for adding elements is O(1). If we decide to use DoubleLinkedList, it will require more time to put the correct pointers between nodes.
+With regards to finding the shortest route, we could also use Dijkstra algorithm for this purpose. A* algorithm uses a heuristic function to prioritize nodes that are closer to the destination, so we skip unnecessary nodes. In contrast, Dijkstra algorithm does not use a heuristic, so it explores more nodes. Brief explanation about Dikstra algorithm implementation [here](#my-dijkstra-algorithm)
+
 
 ## Implementation minimum cost spanning tree 
 
-## Implementation graphic representation(s)
+The showMCST() calculates and displayes all nodes with the minimum total edge weight. We call our minimumCostSpanningTree() method to get the result with SaxGraph type. Then we iterate over all nodes in the graph and for each node individually we again iterate to get its neighbours edges. Based on each edge we calculate the total length and connection count. An alternative for SaxGraph, we could use the custom MyHashMap, where the key is node and the value - a list of its edges. In this case, time complexity for getting edges for each node is O(1). Brief explanation about MCST algorithm implementation [here](#my-mcst-algorithm)
+
+## Implementation graphic representations
+
+The application provides a graphical rail network representation on the Netherlands image. In order to implement this functionality, we have to convert latituge and longitude into 2D points. Each station has a geographical coordinate defined by latitude and longitude. By default, two reference coordinates are created: HDR and MT and their corresponsing points on the map. We use two factors to convert the geographical coordinates: LAT_FACTOR (the ratio of the vertical distance on the screen to the difference in latitude) and LON_FACTOR (the ratio of the horizontal distance on the screen to the difference in longitude). 
+Now we have everything in order to display it on the screen. For this purpose, I have used SaxionApp, because this is the easiest way to implement it. 
+
+#### displayShortestRoute() 
+Method displays the shortest route between two stations on the map. After calculating the route using station codes, it draws the path by connecting each station in the route one by one. It displays the station in a circle together with its name (from start station to goal station). Each station is connected along the route. 
+
+#### displayMCST() 
+Method displays the MCST of the rail network, showing the least number of rail connections. The same principle applies here for graphical representation. It displays the station in a circle together with rail connections between each station. 
+ 
+#### displayRailNetwork() 
+Method provides a full view of the rail network. It shows all stations and their rail connections on the map. It displays the station in a circle together with rail connections.
+
