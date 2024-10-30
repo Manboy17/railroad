@@ -280,7 +280,7 @@ This method connects all stations with the least total track distance and show t
 
 ![image](../resources/ReadingDataDiagram.png)
 
-The ApplicationManager uses StationReader and TrackReader classes to read data from CSV files. Both are stored inside the custom MyArrayList. ArrayList was choosen due to dynamic rezising and easy access elements at any place. An ilternative could be the custom DoubleLinkedList, but using it would result in slower access time and higher memory usage. [MyArrayList Explanation](#myarraylist) and [DoubleLinkedList Explanation](#doublelinkedlist)
+The ApplicationManager uses StationReader and TrackReader classes to read data from CSV files. Both are stored inside the custom MyArrayList. ArrayList was choosen due to dynamic rezising and easy access elements at any place. An alternative could be the custom DoubleLinkedList, but using it would result in slower access time and higher memory usage. [MyArrayList Explanation](#myarraylist) and [DoubleLinkedList Explanation](#doublelinkedlist)
 
 # Station search by station code
 
@@ -288,12 +288,12 @@ The method findStationByCode retrieves a station from the custom MyHashMap, wher
 
 # Station search based on the beginning of the name
 
-The method findStationsByName finds all stations that start with the given substring. I have decided to use the custom MyArrayList, because it is easy to impement and the insertion order remains unchanged. To implement this requirement I looped over all stations and created a condition that would match the provided substring with all possible names using «startsWith» string method. An alternative data structure could be the custom MyHashMap, where the key would be a substirng of station names, and the value would be an array of all stations that start with that substring. However, if we want to get not a single station, but all possible matches, it makes the implementation harder. In my opinion, this approach would probably reduce the time complexity for lookups. 
+The method findStationsByName finds all stations that start with the given substring. I have decided to use the custom MyArrayList, because it is easy to impement and the insertion order remains unchanged. To implement this requirement I looped over all stations and created a condition that would match the provided substring with all possible names using «startsWith» string method. An alternative data structure could be the custom MyHashMap, where the key would be a substirng of station names, and the value would be an array of all stations that start with that substring. However, if we want to get not a single station, but all possible matches, it makes the implementation harder. In my opinion, this approach would probably reduce the time complexity for lookups.
 
 # Station search based on the type
 
 The method findStationByType finds all stations that match a specific type. I have decided to use the custom MyArrayList, similar to findStationByName method, because it allows for easy implementation and maintains the insertion order.
-To implement this, I looped over all stations and created a condition to check if the station’s type metches the provided type using «equals» string method. After calling all matching stations, I used simpleSort method, implemented inside MyArrayList to sort stations in alphabetical order by name. An alternative data structure would be the custom MyHashMap, where the key would be the station type and the value would be MyArrayList containing all stations of that type. However, in my opinion, this would result in more complex implementation using multiple lists for above said logic. 
+To implement this, I looped over all stations and created a condition to check if the station’s type metches the provided type using «equals» string method. After calling all matching stations, I used [simpleSort](#my-simplesort-algorithm) algorithm, implemented inside MyArrayList to sort stations in alphabetical order by name. An alternative data structure would be the custom MyHashMap, where the key would be the station type and the value would be MyArrayList containing all stations of that type. However, in my opinion, this would result in more complex implementation using multiple lists for above said logic. With regards to sorting, we could also use [quickSort](#my-quicksort-algorithm) algorithm. As a result, It will be* faster due to time complexity.
 
 ## Implementation shortest route
 
