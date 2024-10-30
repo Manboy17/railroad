@@ -123,7 +123,6 @@ public class ApplicationManager {
 
     public SaxGraph<String> showMCST() {
         SaxGraph<String> result = graph.minimumCostSpanningTree();
-        System.out.println(result.size()); // 397 size
 
         double totalLength = 0.0;
         int connectionCount = 0;
@@ -134,13 +133,15 @@ public class ApplicationManager {
             String node = iterator.next();
 
             for (SaxGraph.DirectedEdge<String> edge : result.getEdges(node)) {
-                System.out.println(edge.from() + " <-> " + edge.to() + " (distance: " + edge.weight() + " km)");
-                connectionCount++;
-                totalLength += edge.weight();
+                if (edge.from().compareTo(edge.to()) < 0) {
+                    System.out.println(edge.from() + " <-> " + edge.to() + " (distance: " + edge.weight() + " km)");
+                    connectionCount++;
+                    totalLength += edge.weight();
+                }
             }
         }
 
-        System.out.println("Total connections: " + connectionCount); // 3, why??
+        System.out.println("Total connections: " + connectionCount);
         System.out.println("Total length: " + totalLength + " km");
 
         return result;

@@ -259,7 +259,7 @@ public class Application implements Runnable {
         SaxionApp.setFill(color);
         SaxionApp.setBorderColor(color);
 
-        int labelX = (int) point.getX() + 15;
+        int labelX = (int) point.getX() + 10;
         int labelY = (int) point.getY() - 5;
 
         SaxionApp.drawText(label, labelX, labelY, 13);

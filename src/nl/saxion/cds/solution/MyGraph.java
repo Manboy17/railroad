@@ -48,10 +48,26 @@ public class MyGraph<V> implements SaxGraph<V> {
     @Override
     public double getTotalWeight() {
         double result = 0.0;
+        MyHashMap<V, MyHashMap<V, Boolean>> visitedEdges = new MyHashMap<>(nodes.size());
 
         for (Object node : nodes.getKeys()) {
             for (DirectedEdge<V> edge : nodes.get((V) node)) {
-                result += edge.weight();
+                V from = edge.from();
+                V to = edge.to();
+
+                if (!visitedEdges.contains(from)) {
+                    visitedEdges.add(from, new MyHashMap<>(nodes.size()));
+                }
+
+                if (!visitedEdges.get(from).contains(to)) {
+                    result += edge.weight();
+                    visitedEdges.get(from).add(to, true);
+
+                    if (!visitedEdges.contains(to)) {
+                        visitedEdges.add(to, new MyHashMap<>(nodes.size()));
+                    }
+                    visitedEdges.get(to).add(from, true);
+                }
             }
         }
 
@@ -159,7 +175,6 @@ public class MyGraph<V> implements SaxGraph<V> {
         MyHashMap<V, Boolean> visited = new MyHashMap<>(nodes.size());
 
         V startNode = (V) nodes.getKeys().get(0);
-        System.out.println("Start node: " + startNode);
         visited.add(startNode, true);
 
         for (DirectedEdge<V> neighbourEdge : getEdges(startNode)) {
@@ -168,10 +183,9 @@ public class MyGraph<V> implements SaxGraph<V> {
 
         while (!queue.isEmpty()) {
             DirectedEdge<V> edge = queue.dequeue();
-            System.out.println(edge);
 
             if (!visited.contains(edge.to())) {
-                result.addEdge(edge.from(), edge.to(), edge.weight());
+                result.addEdgeBidirectional(edge.from(), edge.to(), edge.weight());
                 visited.add(edge.to(), true);
 
                 for (DirectedEdge<V> neighbourEdge : getEdges(edge.to())) {
