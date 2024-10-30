@@ -20,6 +20,11 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         this.size = 0;
     }
 
+    /**
+     * Checks if the list contains the given value.
+     * @param value the value to search for
+     * @return true if the list contains the value, false otherwise.
+     */
     @Override
     public boolean contains(V value) {
         Node<V> current = head;
@@ -32,6 +37,12 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return false;
     }
 
+    /**
+     * Returns the value at the given index.
+     * @param index the index of the element to retrieve
+     * @return the value at the given index
+     * @throws IndexOutOfBoundsException if the index is out of bounds
+     */
     @Override
     public V get(int index) throws IndexOutOfBoundsException {
         checkIndex(index);
@@ -44,6 +55,10 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return n.value;
     }
 
+    /**
+     * Adds a value to the end of the list.
+     * @param value the value to add
+     */
     @Override
     public void addLast(V value) {
         Node<V> newNode = new Node<>(value);
@@ -58,6 +73,10 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         size++;
     }
 
+    /**
+     * Adds a value to the beginning of the list.
+     * @param value the value to add
+     */
     @Override
     public void addFirst(V value) {
         Node<V> newNode = new Node<>(value);
@@ -72,6 +91,12 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         size++;
     }
 
+    /**
+     * Adds a value at the given index.
+     * @param index index where the value is to be added
+     * @param value the value to add
+     * @throws IndexOutOfBoundsException if the index is out of bounds
+     */
     @Override
     public void addAt(int index, V value) throws IndexOutOfBoundsException {
         if(index == 0) {
@@ -98,6 +123,12 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         }
     }
 
+    /**
+     * Sets the value at the given index.
+     * @param index index where the value is to be set
+     * @param value the value to set
+     * @throws IndexOutOfBoundsException if the index is out of bounds
+     */
     @Override
     public void set(int index, V value) throws IndexOutOfBoundsException {
         checkIndex(index);
@@ -109,6 +140,11 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         current.value = value;
     }
 
+    /**
+     * Removes the last element from the list.
+     * @return the value of the last element
+     * @throws EmptyCollectionException if the list is empty
+     */
     @Override
     public V removeLast() throws EmptyCollectionException {
         if(size == 0) {
@@ -126,6 +162,11 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return value;
     }
 
+    /**
+     * Removes the first element from the list.
+     * @return the value of the first element
+     * @throws EmptyCollectionException if the list is empty
+     */
     @Override
     public V removeFirst() throws EmptyCollectionException {
         if(isEmpty()) {
@@ -144,6 +185,12 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return value;
     }
 
+    /**
+     * Removes the value at the given index.
+     * @param index index where the value is to be removed
+     * @return the value that was removed
+     * @throws IndexOutOfBoundsException if the index is out of bounds
+     */
     @Override
     public V removeAt(int index) throws IndexOutOfBoundsException {
         checkIndex(index);
@@ -168,6 +215,11 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return current.value;
     }
 
+    /**
+     * Removes the first occurrence of the given value.
+     * @param value value to remove
+     * @throws ValueNotFoundException if the value is not found
+     */
     @Override
     public void remove(V value) throws ValueNotFoundException {
         Node<V> current = head;
@@ -189,6 +241,10 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         throw new ValueNotFoundException("Value not found");
     }
 
+    /**
+     * Returns an iterator over the elements in this list.
+     * @return an iterator over the elements in this list
+     */
     @Override
     public Iterator<V> iterator() {
         return new Iterator<V>() {
@@ -210,16 +266,28 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         };
     }
 
+    /**
+     * Checks if the list is empty.
+     * @return true if the list is empty, false otherwise.
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Returns the size of the list.
+     * @return the size of the list.
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Returns the graphviz representation of the list.
+     * @return the graphviz representation of the list.
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -245,8 +313,8 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
     public String graphViz(String name) {
         StringBuilder builder = new StringBuilder();
         builder.append("digraph ").append(name).append(" {\n");
-        builder.append("    rankdir=LR;\n");
-        builder.append("    node [shape=record];\n");
+        builder.append("rankdir=LR;\n");
+        builder.append("node [shape=record];\n");
 
         Node<V> current = head;
         int index = 0;
@@ -285,13 +353,22 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return builder.toString();
     }
 
-
+    /**
+     * Node class for the doubly linked list.
+     * @param index index of the node
+     * @throws IndexOutOfBoundsException if the index is out of bounds
+     */
     private void checkIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
     }
 
+    /**
+     * Node class for the doubly linked list.
+     * @param element element to search for
+     * @return the index of the element
+     */
     @Override
     public int linearSearch(V element) {
         Node<V> current = head;
@@ -309,6 +386,12 @@ public class DoubleLinkedList<V> implements SaxList<V>, SaxSearchable<V> {
         return pos;
     }
 
+    /**
+     * Node class for the doubly linked list.
+     * @param comparator method to compare two V objects
+     * @param element    element to search for
+     * @return an exception (no need to implement this method)
+     */
     @Override
     public int binarySearch(Comparator<V> comparator, V element) {
         throw new RuntimeException("Not implemented yet!");

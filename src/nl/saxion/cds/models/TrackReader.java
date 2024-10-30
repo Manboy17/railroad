@@ -13,6 +13,10 @@ public class TrackReader {
         this.filename = filename;
     }
 
+    /**
+     * Reads the tracks from the CSV file and returns them as a list.
+     * @return the list of tracks.
+     */
     public MyArrayList<Track> readTracksFromCSVFile() {
         MyArrayList<Track> tracks = new MyArrayList<>();
         try {

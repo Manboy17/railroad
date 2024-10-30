@@ -20,6 +20,9 @@ public class ApplicationManager {
     private MyHashMap<String, Station> stationMap;
     private MyGraph<String> graph;
 
+    /**
+     * Constructor for the ApplicationManager class.
+     */
     public ApplicationManager() {
         var stationReader = new StationReader("resources/stations.csv");
         var trackReader = new TrackReader("resources/tracks.csv");
@@ -40,6 +43,9 @@ public class ApplicationManager {
         initializeGraph();
     }
 
+    /**
+     * Initializes the graph by adding all tracks to the graph.
+     */
     private void initializeGraph() {
         for (Track track : tracks) {
             String fromCode = track.getFrom();
@@ -52,14 +58,29 @@ public class ApplicationManager {
         }
     }
 
+    /**
+     * Returns the graph.
+     * @return the graph
+     */
     public MyGraph<String> getGraph() {
         return graph;
     }
 
+
+    /**
+     * Finds a station by its code.
+     * @param code station code
+     * @return the found station
+     */
     public Station findStationByCode(String code) {
         return stationMap.get(code);
     }
 
+    /**
+     * Finds stations by name.
+     * @param name station name
+     * @return a list of stations
+     */
     public MyArrayList<Station> findStationsByName(String name) {
         MyArrayList<Station> matchedStations = new MyArrayList<>();
 
@@ -72,6 +93,11 @@ public class ApplicationManager {
         return matchedStations;
     }
 
+    /**
+     * Finds stations by type.
+     * @param type station type
+     * @return a list of stations
+     */
     public MyArrayList<Station> findStationsByType(String type) {
         MyArrayList<Station> foundStations = new MyArrayList<>();
 
@@ -86,6 +112,12 @@ public class ApplicationManager {
         return foundStations;
     }
 
+    /**
+     * Finds stations by country.
+     * @param stationCode1 station code 1
+     * @param stationCode2 station code 2
+     * @return a list of stations as the shortest route
+     */
     public MyArrayList<String> determineShortestRoute(String stationCode1, String stationCode2) {
         MyArrayList<String> route = new MyArrayList<>();
         SaxGraph.Estimator<String> estimator = (fromStationCode, toStationCode) -> {
@@ -121,6 +153,10 @@ public class ApplicationManager {
         return route;
     }
 
+    /**
+     * Shows the minimum cost spanning tree.
+     * @return the minimum cost spanning tree (graph)
+     */
     public SaxGraph<String> showMCST() {
         SaxGraph<String> result = graph.minimumCostSpanningTree();
 

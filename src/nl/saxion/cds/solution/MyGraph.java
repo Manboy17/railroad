@@ -14,6 +14,13 @@ public class MyGraph<V> implements SaxGraph<V> {
         nodes = new MyHashMap<>(capacity);
     }
 
+    /**
+     * Add an edge between two nodes
+     * @param fromValue originating node value
+     * @param toValue   connected node value
+     * @param weight   weight of the edge
+     * @throws KeyNotFoundException
+     */
     @Override
     public void addEdge(V fromValue, V toValue, double weight) throws KeyNotFoundException {
         if (!nodes.contains(fromValue)) {
@@ -30,12 +37,23 @@ public class MyGraph<V> implements SaxGraph<V> {
         nodes.get(fromValue).addLast(edge);
     }
 
+    /**
+     * Add an edge between two nodes in both directions
+     * @param fromValue originating node value
+     * @param toValue  connected node value
+     * @param weight  weight of the edge
+     */
     @Override
     public void addEdgeBidirectional(V fromValue, V toValue, double weight) {
         addEdge(fromValue, toValue, weight);
         addEdge(toValue, fromValue, weight);
     }
 
+    /**
+     * Get all edges originating from a node
+     * @param value the value of the node the edges originate from
+     * @return a list of edges originating from the node
+     */
     @Override
     public MyArrayList<SaxGraph.DirectedEdge<V>> getEdges(V value) {
         if (nodes == null || !nodes.contains(value)) {
@@ -45,6 +63,10 @@ public class MyGraph<V> implements SaxGraph<V> {
         return nodes.get(value);
     }
 
+    /**
+     * Get the total weight of the graph
+     * @return the total weight of the graph
+     */
     @Override
     public double getTotalWeight() {
         double result = 0.0;
@@ -74,6 +96,11 @@ public class MyGraph<V> implements SaxGraph<V> {
         return result;
     }
 
+    /**
+     * Find the shortest path between two nodes using Dijkstra's algorithm
+     * @param startNode the node to start searching from
+     * @return a graph containing the shortest paths
+     */
     @Override
     public SaxGraph<V> shortestPathsDijkstra(V startNode) {
         MyGraph<V> result = new MyGraph<>(nodes.size());
@@ -100,6 +127,13 @@ public class MyGraph<V> implements SaxGraph<V> {
         return result;
     }
 
+    /**
+     * Find the shortest path between two nodes using A* algorithm
+     * @param startNode the node to start searching
+     * @param endNode   the target node
+     * @param estimator a (handler) function to estimate the distance (weight) between two nodes
+     * @return a list of edges representing the shortest path
+     */
     @Override
     public SaxList<SaxGraph.DirectedEdge<V>> shortestPathAStar(V startNode, V endNode, SaxGraph.Estimator<V> estimator) {
         MyMinHeap<AStarNode<V>> openList = new MyMinHeap<>();
@@ -138,6 +172,11 @@ public class MyGraph<V> implements SaxGraph<V> {
         return new MyArrayList<>();
     }
 
+    /**
+     * Reconstruct the path from the start node to the current node
+     * @param currentNode the current node
+     * @return a list of edges representing the path
+     */
     private SaxList<SaxGraph.DirectedEdge<V>> reconstructPath(AStarNode<V> currentNode) {
         MyArrayList<DirectedEdge<V>> result = new MyArrayList<>();
         while (currentNode != null) {
@@ -149,6 +188,10 @@ public class MyGraph<V> implements SaxGraph<V> {
         return result;
     }
 
+    /**
+     * A node for the A* algorithm
+     * @param <V>
+     */
     private static class AStarNode<V> implements Comparable<AStarNode<V>> {
         DirectedEdge<V> edge;
         double g;
@@ -168,6 +211,10 @@ public class MyGraph<V> implements SaxGraph<V> {
         }
     }
 
+    /**
+     * Find the minimum cost spanning tree using the Kruskal algorithm
+     * @return a graph containing the minimum cost spanning tree
+     */
     @Override
     public SaxGraph<V> minimumCostSpanningTree() {
         MyGraph<V> result = new MyGraph<>(nodes.size());
@@ -198,6 +245,10 @@ public class MyGraph<V> implements SaxGraph<V> {
         return result;
     }
 
+    /**
+     * Get an iterator for the graph
+     * @return an iterator for the graph
+     */
     @Override
     public Iterator<V> iterator() {
         return new Iterator<V>() {
@@ -246,16 +297,29 @@ public class MyGraph<V> implements SaxGraph<V> {
         };
     }
 
+    /**
+     * Check if the graph is empty
+     * @return true if the graph is empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Get the size of the graph
+     * @return the size of the graph
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Get a string representation of the graph
+     * @param name name of the produced graph
+     * @return a string representation of the graph
+     */
     @Override
     public String graphViz(String name) {
         StringBuilder builder = new StringBuilder("digraph " + name + "{\n");

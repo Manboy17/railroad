@@ -30,6 +30,10 @@ public class Application implements Runnable {
     private static Scanner sc = new Scanner(System.in);
     private static int option = -1;
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
         while (true) {
             displayMenu();
@@ -63,6 +67,9 @@ public class Application implements Runnable {
         }
     }
 
+    /**
+     * Run the application
+     */
     @Override
     public void run() {
         SaxionApp.drawImage("resources/Nederland.png", 0, 0, MAP_WIDTH / MAP_FACTOR, MAP_HEIGHT / MAP_FACTOR);
@@ -76,6 +83,9 @@ public class Application implements Runnable {
         }
     }
 
+    /**
+     * Display the main menu
+     */
     private static void displayMenu() {
         System.out.println("WELCOME TO MANAGER TRACK APPLICATION");
         System.out.println("Select one option:");
@@ -87,6 +97,9 @@ public class Application implements Runnable {
         System.out.println("6. Show rail network");
     }
 
+    /**
+     * Search station by code
+     */
     private static void searchStationByCode() {
         Station station = null;
 
@@ -110,6 +123,9 @@ public class Application implements Runnable {
     }
 
 
+    /**
+     * Search stations by name
+     */
     private static void searchStationsByName() {
         System.out.print("Station name: ");
         String name = sc.next();
@@ -148,6 +164,9 @@ public class Application implements Runnable {
         }
     }
 
+    /**
+     * Search stations by type
+     */
     private static void searchStationsByType() {
         System.out.print("Station type: ");
         String type = sc.next();
@@ -165,6 +184,9 @@ public class Application implements Runnable {
         }
     }
 
+    /**
+     * Show the shortest route between two stations
+     */
     private static void showShortestRoute() {
         System.out.print("First station code: ");
         String stationCode1 = sc.next();
@@ -179,10 +201,16 @@ public class Application implements Runnable {
         route = applicationManager.determineShortestRoute(stationCode1, stationCode2);
     }
 
+    /**
+     * Show the minimum number of rail connections
+     */
     private static void showMCST() {
         mcst = applicationManager.showMCST();
     }
 
+    /**
+     * Display the rail network
+     */
     private static void displayRailNetwork() {
         MyGraph<String> connections = applicationManager.getGraph();
 
@@ -211,6 +239,9 @@ public class Application implements Runnable {
                 (int) (lat * LAT_FACTOR + HDR_POINT.getY()) / MAP_FACTOR);
     }
 
+    /**
+     * Display the shortest route between two stations
+     */
     public void displayShortestRoute() {
         if (!route.isEmpty()) {
             Point previousPoint = fromPoint;
@@ -235,6 +266,9 @@ public class Application implements Runnable {
         drawStationLabel(toPoint, to.getName(), Color.WHITE);
     }
 
+    /**
+     * Display the minimum number of rail connections
+     */
     public void displayMCST() {
         if (!mcst.isEmpty()) {
             for (String connection : mcst) {
@@ -255,6 +289,12 @@ public class Application implements Runnable {
         }
     }
 
+    /**
+     * Draw a station on the map
+     * @param point station point
+     * @param label station label
+     * @param color station color
+     */
     private void drawStationLabel(Point point, String label, Color color) {
         SaxionApp.setFill(color);
         SaxionApp.setBorderColor(color);
@@ -265,6 +305,12 @@ public class Application implements Runnable {
         SaxionApp.drawText(label, labelX, labelY, 13);
     }
 
+    /**
+     * Draw a station on the map
+     * @param point station point
+     * @param color station color
+     * @param radius station circle drawn radius on the map
+     */
     private static void drawStation(Point point, Color color, int radius) {
         SaxionApp.setBorderColor(Color.RED);
         SaxionApp.setBorderSize(1);

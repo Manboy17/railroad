@@ -13,7 +13,10 @@ public class StationReader {
         this.filename = filename;
     }
 
-
+    /**
+     * Reads the stations from the CSV file and returns them as a list.
+     * @return the list of stations.
+     */
     public MyArrayList<Station> readStationsFromCSVFile() {
         MyArrayList<Station> result = new MyArrayList<>();
         try {
