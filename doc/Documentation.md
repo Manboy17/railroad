@@ -6,7 +6,7 @@ Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.ja
 MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. During the class we had a live coding session with our teacher, where he showed us the implementation of binary and linear searches. Additionally, we had a discussion about and code examples about simple and quick sorts. 
 
 ### My binary search algorithm
-Big-O complexity: O(log(N)) ([source](https://medium.com/@samip.sharma963/binary-search-and-its-big-o-3333d13bd6ec))
+Big-O complexity: O(log(N)) ([source](https://medium.com/@samip.sharma963/binary-search-and-its-big-o-3333d13bd6ec)). The time complexity arises from how the algorithm works: each iteration halves the size of the search space. Since each division of the array takes constant time, the algorithm runs in O(log N) time.
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java).
 
@@ -22,7 +22,7 @@ One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmState
 - Handling missing elements: It tests for the element that is not present in the list.
 
 ### My linear search algorithm
-Big-O complexity: O(N)
+Big-O complexity: O(N). Linear search has a time complexity of O(N) because, in the worst case, it must examine every element.
 
 Implementation: [my_implementation](../src//nl/saxion/cds/solution/MyArrayList.java)
 
@@ -38,7 +38,7 @@ One part of the test method named [GivenLargeList_WhenMakingChanges_ConfirmState
 - Handling missing elements: It tests for the element that is not present in the list.
 
 ### My SimpleSort Algorithm
-Big-O complexity: O(n^2)
+Big-O complexity: O(n^2). The algorithm’s nested loops mean that for each element in the list, it potentially compares with every other unsorted element, leading to O(N²) time complexity.
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
@@ -50,7 +50,7 @@ Test [GivenLargeList_WhenMakingChanges_ConfirmStateRemainsCorrect](../test/colle
 
 
 ### My QuickSort algorithm
-Big-O complexity: O(n log n) ([source](https://www.tutorchase.com/answers/a-level/computer-science/what-is-the-big-o-notation-of-the-quicksort-algorithm))
+Big-O complexity: O(n log n) ([source](https://www.tutorchase.com/answers/a-level/computer-science/what-is-the-big-o-notation-of-the-quicksort-algorithm)). The best-case scenario for Quicksort occurs when the pivot element selected during each partition step divides the array exactly in half. In this case, the time complexity is O(n log n) ([source](https://www.tutorchase.com/answers/a-level/computer-science/what-is-the-big-o-notation-of-the-quicksort-algorithm)).
 
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
 
@@ -71,7 +71,7 @@ Another test [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/co
 Implementation: [my_implementation](../src/nl/saxion/cds/solution/DoubleLinkedList.java)
 
 ### My LinearSearch Algorithm
-Big O complexity: O(n)
+Big O complexity: O(n). Linear search runs in linear time and makes a maximum of n comparisons, where n is the length of the list. 
 
 #### Explanation
 This algorithm iterates over all nodes, starting from the head and moving towards the tail. Each iteration takes O(1), but since you mau need to loop over all n nodes, the overall time complexity is O(n). Worst cases, where element is not present or this is a tail. Firsly, we loop through each node and then check if the current node's value matches the element we are looking for. If it is equal - return its position, it not - move to the next node. 
@@ -238,7 +238,7 @@ It always depends. In the best scenario is O (E log V), where E - number of edge
 #### Implementation:
 (The code was developed by understanding the Prim's logic in the sheets)
 
-MCST algorithm, used with Prim algorithm to find the minimum possible total edge weight. For this implementation, I have used MyMinHeap (priority queue) to keep the edges to explore with the lowest weight first, MyHashMap to kepp track of explored nodes. Firstly, we add the first node to visisted (can be any node), then we add all the edges connected to the start node to the priority queue. While queue is not empty, we get the edge with the lowest weight from the queue. If the destination node of this node has already been visisted, we continue the process. If this is not true, we then add edge to the result graph and immediately mark the connected node as visited. After that, we again look for its neighbours. If these connected nodes have npt been visited yet, we add them to the queue. Once the queue is empty, it means that we have made the minimum cost spanning tree and return the result. 
+MCST algorithm, used with Prim algorithm to find the minimum possible total edge weight. For this implementation, I have used MyMinHeap (priority queue) to keep the edges to explore with the lowest weight first, MyHashMap to kepp track of explored nodes. Firstly, we add the first node to visisted (can be any node), then we add all the edges connected to the start node to the priority queue. While queue is not empty, we get the edge with the lowest weight from the queue. If the destination node of this node has already been visisted, we continue the process. If this is not true, we then add edge to the result graph and immediately mark the connected node as visited. After that, we again look for its neighbours. If these connected nodes have not been visited yet, we add them to the queue. Once the queue is empty, it means that we have made the minimum cost spanning tree and return the result. 
 
 # Technical design My Application
 ![image](../resources/ApplicationDiagram.png)
@@ -297,15 +297,15 @@ To implement this, I looped over all stations and created a condition to check i
 
 ## Implementation shortest route
 
-The determineShortestRoute() method is used to determine the shortest route between two stations using a heuristic for distance estimation. Brief explanation about A* algorithm implementation [here](#my-a-algorithm).
+The determineShortestRoute() method is used to determine the shortest route between two stations using a heuristic for distance estimation. In-depth explanation about A* algorithm implementation [here](#my-a-algorithm).
 This method receives 2 station codes from user, where we find the actual stations using findStationByCode() method implemented earlier. We need them to make an estimate from one station to another using heuristic function. Then we use shortestPathAStar algorithm from SaxGraph interface. After the shortest route has been found, we calculate the total distance and display the found route by looping over each node’s neighbour and get their weight. 
 To store the found path, I could use either the customer MyArrayList or DoubleLinkedList. In my opinion, using MyArrayList is better option, because the time complexity for adding elements is O(1). If we decide to use DoubleLinkedList, it will require more time to put the correct pointers between nodes.
-With regards to finding the shortest route, we could also use Dijkstra algorithm for this purpose. A* algorithm uses a heuristic function to prioritize nodes that are closer to the destination, so we skip unnecessary nodes. In contrast, Dijkstra algorithm does not use a heuristic, so it explores more nodes. Brief explanation about Dikstra algorithm implementation [here](#my-dijkstra-algorithm)
+With regards to finding the shortest route, we could also use Dijkstra algorithm for this purpose. A* algorithm uses a heuristic function to prioritize nodes that are closer to the destination, so we skip unnecessary nodes. In contrast, Dijkstra algorithm does not use a heuristic, so it explores more nodes. In-depth explanation about Dikstra algorithm implementation [here](#my-dijkstra-algorithm)
 
 
 ## Implementation minimum cost spanning tree 
 
-The showMCST() calculates and displayes all nodes with the minimum total edge weight. We call our minimumCostSpanningTree() method to get the result with SaxGraph type. Then we iterate over all nodes in the graph and for each node individually we again iterate to get its neighbours edges. Based on each edge we calculate the total length and connection count. An alternative for SaxGraph, we could use the custom MyHashMap, where the key is node and the value - a list of its edges. In this case, time complexity for getting edges for each node is O(1). Brief explanation about MCST algorithm implementation [here](#my-mcst-algorithm)
+The showMCST() calculates and displayes all nodes with the minimum total edge weight. We call our minimumCostSpanningTree() method to get the result with SaxGraph type. Then we iterate over all nodes in the graph and for each node individually we again iterate to get its neighbours edges. Based on each edge we calculate the total length and connection count. An alternative for SaxGraph, we could use the custom MyHashMap, where the key is node and the value - a list of its edges. In this case, time complexity for getting edges for each node is O(1). In-depth explanation about MCST algorithm implementation [here](#my-mcst-algorithm)
 
 ## Implementation graphic representations
 
