@@ -1,9 +1,9 @@
 # Algoritmen en klassen
 
 ## MyArrayList
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/MyArrayList.java). Most methods were already implemented by the teacher in a template. 
 
-MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. During the class we had a live coding session with our teacher, where he showed us the implementation of binary and linear searches. Additionally, we had a discussion about and code examples about simple and quick sorts. 
+MyArryList is a custom implementation for the SaxList, SaxSearchable, SaxSortable interfaces. During the class we had a live coding session with our teacher, where he showed us the implementation of binary and linear searches. Additionally, we had code examples about simple and quick sorts. 
 
 ### My binary search algorithm
 Big-O complexity: O(log(N)) ([source](https://medium.com/@samip.sharma963/binary-search-and-its-big-o-3333d13bd6ec)). The time complexity arises from how the algorithm works: each iteration halves the size of the search space. Since each division of the array takes constant time, the algorithm runs in O(log N) time.
@@ -68,7 +68,7 @@ Another test [GivenListWithIntegers_WhenQuickSorted_ThenListIsSorted](../test/co
 
 ## DoubleLinkedList
 
-Implementation: [my_implementation](../src/nl/saxion/cds/solution/DoubleLinkedList.java)
+Implementation: [my_implementation](../src/nl/saxion/cds/solution/DoubleLinkedList.java). To implement all the methods correctly, I checked the exercies we did during the previous year in "Data Structures" course. During this course, we had to implement contains(), get(), add(), remove(), addAt(), removeAt() methods. In some cases, I used this [website](https://akcoding.com/dsa/linear-data-structures/exploring-the-doubly-linked-lists/) as a source. 
 
 ### My LinearSearch Algorithm
 Big O complexity: O(n). Linear search runs in linear time and makes a maximum of n comparisons, where n is the length of the list. 
